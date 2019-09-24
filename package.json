@@ -1,0 +1,19 @@
+{
+  "name": "superspider",
+  "version": "0.1.0",
+  "description": "走召虫——BiliBili SuperChat 爬虫",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dd-center/SuperSpider.git"
+  },
+  "author": "Il Harper",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dd-center/SuperSpider/issues"
+  },
+  "homepage": "https://github.com/dd-center/SuperSpider#readme"
+}
