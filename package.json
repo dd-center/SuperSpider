@@ -15,5 +15,16 @@
   "bugs": {
     "url": "https://github.com/dd-center/SuperSpider/issues"
   },
-  "homepage": "https://github.com/dd-center/SuperSpider#readme"
+  "homepage": "https://github.com/dd-center/SuperSpider#readme",
+  "dependencies": {
+    "cross-env": "^6.0.0",
+    "eslint": "^6.4.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "git-cz": "^3.2.1",
+    "lint-staged": "^9.3.0",
+    "nodemon": "^1.19.2",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9"
+  }
 }
