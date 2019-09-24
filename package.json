@@ -33,6 +33,7 @@
     "git-cz": "^3.2.1",
     "lint-staged": "^9.3.0",
     "nodemon": "^1.19.2",
+    "prettier": "^1.18.2",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9"
   },
