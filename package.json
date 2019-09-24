@@ -4,11 +4,20 @@
   "description": "走召虫——BiliBili SuperChat 爬虫",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore . --fix",
+    "commit": "git cz"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dd-center/SuperSpider.git"
+  },
+  "lint-staged": {
+    "*.{js,vue}": "eslint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "author": "Il Harper",
   "license": "MIT",
@@ -26,5 +35,10 @@
     "nodemon": "^1.19.2",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/git-cz"
+    }
   }
 }
