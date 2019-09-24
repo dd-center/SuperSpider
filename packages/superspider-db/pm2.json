@@ -7,5 +7,7 @@
   },
   "env_production": {
     "NODE_ENV": "production"
-  }
+  },
+  "autorestart": true,
+  "watch": false
 }
