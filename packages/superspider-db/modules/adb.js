@@ -50,7 +50,7 @@ module.exports = async function() {
       console.log('ERR when adb rp ' + count)
       console.log(e)
     }
-    console.log('RUN here at count ' + count)
+    // console.log('RUN here at count ' + count)
     count++
   } while (true)
 }
