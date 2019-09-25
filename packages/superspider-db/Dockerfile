@@ -1,4 +1,4 @@
-FROM keymetrics/pm2:latest-slim
+FROM node:slim
 LABEL maintainer="afanyiyu@hotmail.com"
 LABEL version="0.1.0"
 WORKDIR /app
@@ -9,4 +9,4 @@ RUN npm audit fix
 RUN mkdir -p /scdb
 VOLUME /scdb
 EXPOSE 2161
-ENTRYPOINT pm2-runtime start pm2.json
+ENTRYPOINT npm run start
