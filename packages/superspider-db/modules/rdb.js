@@ -12,11 +12,11 @@ const rList = {}
 const tsList = {}
 
 const rdbCore = async (rid) => {
-  if (!rList[uid]) rList[rid] = new Array()
-  if (!tsList[uid]) {
-    tsList[uid] = new Date().getTime()
+  if (!rList[rid]) rList[rid] = new Array()
+  if (!tsList[rid]) {
+    tsList[rid] = new Date().getTime()
     await fs.promises.mkdir('/scdb/rdb/' + rid, { recursive: true })
-    await fs.promises.appendFile('/scdb/rdb/' + rid + '/' + tsList[uid], '')
+    await fs.promises.appendFile('/scdb/rdb/' + rid + '/' + tsList[rid], '')
   }
   try {
     const data = JSON.parse(
@@ -32,9 +32,9 @@ const rdbCore = async (rid) => {
       return
     }
     for (const item of data.data.list) {
-      if (rList[uid].includes(item.id)) continue
+      if (rList[rid].includes(item.id)) continue
       await fs.promises.appendFile(
-        '/scdb/rdb/' + rid + '/' + tsList[uid],
+        '/scdb/rdb/' + rid + '/' + tsList[rid],
         item.id + ':' + item.uid + ':' + item.price + ':' + item.message + '\n'
         // ':' +
         // data.data.message_jpn
@@ -48,8 +48,8 @@ const rdbCore = async (rid) => {
 
 const rdbClose = async (rid) => {
   schList[rid].cancel()
-  rList[uid] = false
-  tsList[uid] = false
+  rList[rid] = false
+  tsList[rid] = false
 }
 
 module.exports = async function() {
