@@ -2,7 +2,7 @@ const io = require('socket.io-client')
 const socket = io('https://api.vtbs.moe')
 
 // const events = require('events')
-const dispatch = undefined
+let dispatch = undefined
 
 const LiveWS = require('bilibili-live-ws')
 // const no = require('./env')
