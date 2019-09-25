@@ -54,12 +54,12 @@ const rdbClose = async (rid) => {
 
 module.exports = async function() {
   rws(emitter)
-  emitter.on('LIVE', (rid, mid) => {
-    schList[rid] = schedule.scheduleJob('*/30 * * * * *', async () => {
-      await rdbCore(rid)
+  emitter.on('LIVE', (data) => {
+    schList[data.roomid] = schedule.scheduleJob('*/30 * * * * *', async () => {
+      await rdbCore(data.roomid)
     })
   })
-  emitter.on('PREPARING', async (rid, mid) => {
-    await rdbClose(rid)
+  emitter.on('PREPARING', async (data) => {
+    await rdbClose(data.roomid)
   })
 }
