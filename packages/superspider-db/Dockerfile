@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . /app
 ENV NPM_CONFIG_LOGLEVEL warn
 RUN npm i
-RUN npm i -s cross-env
+RUN npm i -S cross-env
 RUN npm audit fix
 RUN mkdir -p /scdb
 VOLUME /scdb
