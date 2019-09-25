@@ -39,6 +39,7 @@ const rdbCore = async (rid) => {
         // ':' +
         // data.data.message_jpn
       )
+      rList[rid].push(item.id)
     }
   } catch (e) {
     console.log('ERR when rp room ' + rid)
@@ -47,6 +48,7 @@ const rdbCore = async (rid) => {
 }
 
 const rdbClose = async (rid) => {
+  if (!schList[rid]) return
   schList[rid].cancel()
   rList[rid] = false
   tsList[rid] = false
