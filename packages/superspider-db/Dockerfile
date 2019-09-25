@@ -1,4 +1,4 @@
-FROM keymetrics/pm2:slim
+FROM keymetrics/pm2:latest-slim
 LABEL maintainer="afanyiyu@hotmail.com"
 LABEL version="0.1.0"
 WORKDIR /app
