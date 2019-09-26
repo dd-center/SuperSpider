@@ -11,7 +11,7 @@ process.on('uncaughtException', (err) => {
   console.log(err)
 })
 
-schedule.scheduleJob('*/10 * * * *', adb)
+schedule.scheduleJob('*/5 * * * *', adb)
 ;(async () => {
   await adb()
   await rdb()
