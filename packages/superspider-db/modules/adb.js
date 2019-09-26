@@ -32,6 +32,8 @@ module.exports = async function() {
           '/scdb/adb/db',
           data.data.id +
             ':' +
+            data.data.ts +
+            ':' +
             data.data.uid +
             ':' +
             data.data.price +
