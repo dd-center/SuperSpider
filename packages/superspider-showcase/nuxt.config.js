@@ -1,4 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
+import zhHans from 'vuetify/es5/locale/zh-Hans'
+import en from 'vuetify/es5/locale/en'
+import ja from 'vuetify/es5/locale/ja'
 
 export default {
   mode: 'universal',
@@ -27,10 +30,13 @@ export default {
    ** Global CSS
    */
   css: [],
+  router: {
+    middleware: 'i18n'
+  },
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/i18n.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -57,6 +63,10 @@ export default {
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
+    lang: {
+      locales: { zhHans, en, ja },
+      current: 'ja'
+    },
     customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: true,
