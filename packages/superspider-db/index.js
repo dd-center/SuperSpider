@@ -19,10 +19,6 @@ process.on('uncaughtException', (err) => {
 
 schedule.scheduleJob('*/5 * * * *', adb)
 ;(async () => {
-  await adb()
-  await rdb()
-  // await trdb()
-
   app.use(bodyParser())
 
   // 其他页面通过 router 加载
@@ -42,4 +38,8 @@ schedule.scheduleJob('*/5 * * * *', adb)
   app.use(router.routes())
 
   app.listen(2161)
+
+  await adb()
+  await rdb()
+  // await trdb()
 })()
