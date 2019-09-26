@@ -1,3 +1,4 @@
+const { once } = require('events')
 const fs = require('fs')
 const readline = require('readline')
 const rp = require('request-promise-native')
@@ -67,8 +68,8 @@ module.exports = async function() {
     input: fileStream,
     crlfDelay: Infinity
   })
-  rl.on('line', async (line) => {
-    if (line.split(':').length < 1) return
+  for await (const line of rl) {
+    if (line.split(':').length < 1) continue
     const id = line.split(':')[0]
     let data = ''
     for (const i of line.split(':').slice(1)) {
@@ -80,18 +81,18 @@ module.exports = async function() {
         input: fstr,
         crlfDelay: Infinity
       })
-      let rid = ''
-      r.on('line', async (li) => {
-        if (li.split(':').length < 1) return
-        if (li.split(':')[0] === id) rid = li.split(':')[1]
-      })
-      await once(r, 'close')
+      let rid = '-1'
+      for await (const li of r) {
+        if (li.split(':').length < 1) continue
+        if (li.split(':')[0] == id) rid = li.split(':')[1]
+      }
+      // await once(r, 'close')
       await fs.promises.appendFile('/scdb/xdb/db', id + ':' + rid + data + '\n')
     } catch (e) {
       console.log('ERR when fetch tlist')
       console.log(e)
     }
-  })
-  await once(rl, 'close')
+  }
+  // await once(rl, 'close')
   global.adbRunning = false
 }

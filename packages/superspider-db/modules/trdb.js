@@ -1,8 +1,10 @@
+const { once } = require('events')
 const fs = require('fs')
 const readline = require('readline')
 const rp = require('request-promise-native')
 
 module.exports = async function() {
+  console.log('TRDB STARTED')
   const roomList = await fs.promises.readdir('/scdb/rdb')
   for (const room of roomList) {
     await fs.promises.mkdir('/scdb/rdb2/' + room, { recursive: true })
@@ -14,8 +16,9 @@ module.exports = async function() {
         input: fileStream,
         crlfDelay: Infinity
       })
-      rl.on('line', async (line) => {
-        if (line.split(':').length < 1) return
+      // rl.on('line', async (line) => {
+      for await (const line of rl) {
+        if (line.split(':').length < 1) continue
         const data = JSON.parse(
           await rp({
             uri: 'https://api.live.bilibili.com/av/v1/SuperChat/messageInfo',
@@ -43,8 +46,8 @@ module.exports = async function() {
           '/scdb/tdb/tlist',
           data.data.id + ':' + room + '\n'
         )
-      })
-      await once(rl, 'close')
+      }
+      // await once(rl, 'close')
       await fs.promises.writeFile('/scdb/rdb2/' + room + '/' + file, output)
     }
   }
