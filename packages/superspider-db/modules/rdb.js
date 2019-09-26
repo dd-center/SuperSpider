@@ -15,8 +15,8 @@ const rdbCore = async (rid) => {
   if (!rList[rid]) rList[rid] = new Array()
   if (!tsList[rid]) {
     tsList[rid] = new Date().getTime()
-    await fs.promises.mkdir('/scdb/rdb/' + rid, { recursive: true })
-    await fs.promises.appendFile('/scdb/rdb/' + rid + '/' + tsList[rid], '')
+    await fs.promises.mkdir('/scdb/rdb2/' + rid, { recursive: true })
+    await fs.promises.appendFile('/scdb/rdb2/' + rid + '/' + tsList[rid], '')
   }
   try {
     const data = JSON.parse(
@@ -34,10 +34,25 @@ const rdbCore = async (rid) => {
     for (const item of data.data.list) {
       if (rList[rid].includes(item.id)) continue
       await fs.promises.appendFile(
-        '/scdb/rdb/' + rid + '/' + tsList[rid],
-        item.id + ':' + item.uid + ':' + item.price + ':' + item.message + '\n'
+        '/scdb/rdb2/' + rid + '/' + tsList[rid],
+        item.id +
+          ':' +
+          rid +
+          ':' +
+          item.ts +
+          ':' +
+          item.uid +
+          ':' +
+          item.price +
+          ':' +
+          item.message +
+          '\n'
         // ':' +
         // data.data.message_jpn
+      )
+      await fs.promises.appendFile(
+        '/scdb/tdb/tlist',
+        item.id + ':' + rid + '\n'
       )
       rList[rid].push(item.id)
     }

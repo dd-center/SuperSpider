@@ -7,6 +7,7 @@ const schedule = require('node-schedule')
 
 const adb = require('./modules/adb')
 const rdb = require('./modules/rdb')
+// const trdb = require('./modules/trdb')
 // const rws = require('./utils/rws')
 
 global.adbRunning = false
@@ -20,6 +21,7 @@ schedule.scheduleJob('*/5 * * * *', adb)
 ;(async () => {
   await adb()
   await rdb()
+  // await trdb()
 
   app.use(bodyParser())
 
