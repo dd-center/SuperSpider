@@ -11,7 +11,11 @@
 | ANA     | 2163 |
 | Website | 2164 |
 
-## Using Docker
+## 数据格式
+
+除`ADB`中的数据为`ID:UID:TS（时间戳）:内容`之外，其他数据格式均为`ID:房间号:UID:TS（时间戳）:内容`。
+
+## Deploy
 
 ### DB
 
