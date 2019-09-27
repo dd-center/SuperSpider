@@ -14,6 +14,6 @@ module.exports = {
     'prettier/prettier': 'error'
   },
   parserOptions: {
-    // ecmaVersion: 8
+    ecmaVersion: 11
   }
 }
