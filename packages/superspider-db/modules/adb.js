@@ -71,6 +71,7 @@ module.exports = async function() {
   for await (const line of rl) {
     if (line.split(':').length < 1) continue
     const id = line.split(':')[0]
+    if (parseInt(id) < xCount) continue
     let data = ''
     for (const i of line.split(':').slice(1)) {
       data += ':' + i
