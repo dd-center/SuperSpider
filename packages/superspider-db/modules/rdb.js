@@ -45,7 +45,7 @@ const rdbCore = async (rid) => {
           ':' +
           item.price +
           ':' +
-          item.message +
+          item.message.replace(/\s*/g, '').replace(/[\r\n]/g, '') +
           '\n'
         // ':' +
         // data.data.message_jpn
@@ -58,7 +58,7 @@ const rdbCore = async (rid) => {
     }
   } catch (e) {
     console.log('ERR when rp room ' + rid)
-    console.log(e)
+    // console.log(e)
   }
 }
 

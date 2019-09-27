@@ -1,4 +1,4 @@
-const { once } = require('events')
+// const { once } = require('events')
 const fs = require('fs')
 const readline = require('readline')
 const rp = require('request-promise-native')
@@ -38,7 +38,7 @@ module.exports = async function() {
           ':' +
           data.data.price +
           ':' +
-          data.data.message +
+          data.data.message.replace(/\s*/g, '').replace(/[\r\n]/g, '') +
           '\n'
         // ':' +
         // data.data.message_jpn
