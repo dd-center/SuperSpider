@@ -1,9 +1,8 @@
-import colors from 'vuetify/es5/util/colors'
-import zhHans from 'vuetify/es5/locale/zh-Hans'
-import en from 'vuetify/es5/locale/en'
-import ja from 'vuetify/es5/locale/ja'
-
 export default {
+  server: {
+    host: '0.0.0.0',
+    port: '2164'
+  },
   mode: 'universal',
   /*
    ** Headers of the page
@@ -25,25 +24,24 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: '#409eff' },
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['element-ui/lib/theme-chalk/index.css'],
   router: {
     middleware: 'i18n'
   },
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/i18n.js'],
+  plugins: ['@/plugins/element-ui', '~/plugins/i18n.js'],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/eslint-module'
   ],
   /*
    ** Nuxt.js modules
@@ -59,34 +57,10 @@ export default {
    */
   axios: {},
   /*
-   ** vuetify module configuration
-   ** https://github.com/nuxt-community/vuetify-module
-   */
-  vuetify: {
-    lang: {
-      locales: { zhHans, en, ja },
-      current: 'ja'
-    },
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: true,
-      themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        }
-      }
-    }
-  },
-  /*
    ** Build configuration
    */
   build: {
+    transpile: [/^element-ui/],
     /*
      ** You can extend webpack config here
      */
