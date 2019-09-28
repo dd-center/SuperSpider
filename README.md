@@ -56,3 +56,13 @@ Run using:
 Internal build using:
 
 `docker build -t afanyiyu/superspider-showcase github.com/dd-center/SuperSpider#master:packages/superspider-showcase`
+
+## 捐赠
+
+您的捐赠是对该项目及我本人的支持。本项目获得的所有捐赠将会全部用于服务器的维护。
+
+![Alipay](https://raw.githubusercontent.com/dd-center/SuperSpider/master/docs/pay/Alipay.jpg)
+
+![Wechat](https://raw.githubusercontent.com/dd-center/SuperSpider/master/docs/pay/Wechat.png)
+
+![WechatReward](https://raw.githubusercontent.com/dd-center/SuperSpider/master/docs/pay/WechatReward.png)
