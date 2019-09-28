@@ -4,6 +4,7 @@ const app = new Koa()
 const Router = require('koa-router')
 const router = new Router()
 const bodyParser = require('koa-bodyparser')
+const cors = require('@koa/cors')
 
 process.on('uncaughtException', (err) => {
   console.log('ERR unc expt')
@@ -11,6 +12,16 @@ process.on('uncaughtException', (err) => {
 })
 ;(async () => {
   app.use(bodyParser())
+  app.use(
+    cors({
+      origin: (ctx) => '*',
+      exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+      maxAge: 5,
+      credentials: true,
+      allowMethods: ['GET', 'POST', 'DELETE'],
+      allowHeaders: ['Content-Type', 'Authorization', 'Accept']
+    })
+  )
 
   // 其他页面通过 router 加载
   let api = fs.readdirSync(__dirname + '/api')
