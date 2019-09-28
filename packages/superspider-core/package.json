@@ -10,6 +10,7 @@
   "author": "Il Harper",
   "license": "MIT",
   "dependencies": {
+    "@koa/cors": "^2.2.3",
     "cheerio": "^1.0.0-rc.3",
     "cross-env": "^6.0.0",
     "koa": "^2.8.1",
