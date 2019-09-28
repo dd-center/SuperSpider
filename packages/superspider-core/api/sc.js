@@ -79,6 +79,26 @@ sc.post('/', async (ctx, next) => {
 //   }
 // })
 
+// /sc/getExRate
+sc.get('/getExRate', async (ctx, next) => {
+  ctx.response.status = 200
+  try {
+    ctx.response.body = JSON.parse(
+      await rp('https://api.live.bilibili.com/userext/v1/Conf/getExchangeRate')
+    ).data.exchange_rate
+    await next()
+  } catch (e) {
+    ctx.response.status = 404
+    ctx.response.body = {
+      code: 255,
+      msg: 'Data Request Failes',
+      error: e
+    }
+    await next()
+    return
+  }
+})
+
 // /sc/getFullList
 sc.post('/getFullList', async (ctx, next) => {
   if (!ctx.request.body.roomid) {
