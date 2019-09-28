@@ -123,7 +123,7 @@ sc.post('/getFullList', async (ctx, next) => {
       tsSort.push(Number(ts))
     }
     tsSort = tsSort.sort((a, b) => {
-      return b - a
+      return a - b
     })
     tsSort = tsSort.slice(0, 10)
     // console.log(tsSort)
