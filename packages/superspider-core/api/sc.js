@@ -123,7 +123,7 @@ sc.post('/getFullList', async (ctx, next) => {
       tsSort.push(Number(ts))
     }
     tsSort = tsSort.sort((a, b) => {
-      return a - b
+      return b - a
     })
     tsSort = tsSort.slice(0, 10)
     // console.log(tsSort)
@@ -136,7 +136,7 @@ sc.post('/getFullList', async (ctx, next) => {
         input: fileStream,
         crlfDelay: Infinity
       })
-      const output = []
+      let output = []
       for await (const line of rl) {
         const data = parseLine(line)
         if (!data) continue
@@ -152,6 +152,9 @@ sc.post('/getFullList', async (ctx, next) => {
           if (output.findIndex((v) => v.id == d.id) < 0) output.push(d)
         } catch (e) {}
       }
+      output = output.sort((a, b) => {
+        return Number(b.start_time) - Number(a.start_time)
+      })
       if (output.length < 1) continue
       fullData.push({
         ts,
