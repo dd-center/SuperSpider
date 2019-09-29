@@ -46,5 +46,7 @@
     "commitizen": {
       "path": "./node_modules/git-cz"
     }
-  }
+  },
+  "private": true,
+  "workspaces": ["packages/*"]
 }
