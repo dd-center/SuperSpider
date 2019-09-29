@@ -63,3 +63,4 @@ typings/
 # Temp files
 temp.js
 temp/
+*package-lock.json
