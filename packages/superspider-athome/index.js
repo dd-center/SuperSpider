@@ -22,7 +22,7 @@ const parse = (string) => {
 }
 
 const url = new URL(
-  process.env.url || process.env.development
+  process.env.NODE_ENV == 'development'
     ? 'ws://0.0.0.0:2165'
     : 'wss://athome.bilisc.com'
 )
