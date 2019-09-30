@@ -18,6 +18,8 @@ global.amdb = false
 // global.rmdb = false
 // global.umdb = false
 
+global.usingAtHome = process.env.USINGATHOME
+
 process.on('uncaughtException', (err) => {
   console.log('ERR unc expt')
   console.log(err)

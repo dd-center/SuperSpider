@@ -20,12 +20,21 @@ const rdbCore = async (rid) => {
     tsList[rid] = new Date().getTime()
   }
   try {
-    const data = JSON.parse(
-      await athome.execute(
-        'https://api.live.bilibili.com/av/v1/SuperChat/getMessageList?room_id=' +
-          rid
+    let data = false
+    if (global.usingAtHome)
+      data = JSON.parse(
+        await athome.execute(
+          'https://api.live.bilibili.com/av/v1/SuperChat/getMessageList?room_id=' +
+            rid
+        )
       )
-    )
+    else
+      data = JSON.parse(
+        await rp(
+          'https://api.live.bilibili.com/av/v1/SuperChat/getMessageList?room_id=' +
+            rid
+        )
+      )
     if (data.code !== 0) {
       console.log('ERR when rp room ' + rid + ' by code')
       return
