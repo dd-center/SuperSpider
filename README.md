@@ -44,8 +44,6 @@
   // 冻肉
   "trstatus": 0,
   // 翻译者鉴权
-  "tr": 1,
-  // 翻译者
   "bcolor": "",
   "pcolor": "",
   "exrate": "",
@@ -84,6 +82,16 @@ Run using:
 Internal build using:
 
 `docker build -t afanyiyu/superspider-core github.com/dd-center/SuperSpider#master:packages/superspider-core`
+
+### MCore
+
+Run using:
+
+`docker run -d -p 2162:2162 afanyiyu/superspider-mcore`
+
+Internal build using:
+
+`docker build -t afanyiyu/superspider-mcore github.com/dd-center/SuperSpider#master:packages/superspider-mcore`
 
 ### ANA
 
