@@ -84,6 +84,12 @@ process.on('uncaughtException', (err) => {
     },
     (e, s) => {}
   )
+  global.amdb.createIndex(
+    {
+      roomid: -1
+    },
+    (e, s) => {}
+  )
   // global.amdb.createIndex(
   //   {
   //     _id: -1,
