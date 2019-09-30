@@ -52,7 +52,9 @@ process.on('uncaughtException', (err) => {
   const client = new MongoClient(
     process.env.NODE_ENV == 'development'
       ? 'mongodb://localhost:27017/amdb'
-      : 'mongodb://172.18.0.1:27017/amdb',
+      : 'mongodb://admin:' +
+        process.env.MONGODB_PASS +
+        '@172.18.0.1:27017/amdb?authMechanism=DEFAULT',
     { useNewUrlParser: true }
   )
 
