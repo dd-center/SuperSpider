@@ -69,7 +69,7 @@ Internal build using:
 
 Run using:
 
-`docker run -d -p 2166:2166 -v /scdb:/scdb afanyiyu/superspider-mdb`
+`docker run -d -p 2165:2165 -p 2166:2166 -v /scdb:/scdb afanyiyu/superspider-mdb`
 
 Internal build using:
 

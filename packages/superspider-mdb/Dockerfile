@@ -8,5 +8,5 @@ RUN npm i
 RUN npm audit fix
 RUN mkdir -p /scdb
 VOLUME /scdb
-EXPOSE 2166
+EXPOSE 2165 2166
 ENTRYPOINT npm run start
