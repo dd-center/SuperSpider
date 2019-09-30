@@ -7,6 +7,8 @@ const fs = require('fs')
 // const schedule = require('node-schedule')
 const bodyParser = require('koa-bodyparser')
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 const rdb = require('./modules/rdb')
 
 const MongoClient = require('mongodb').MongoClient
@@ -78,8 +80,17 @@ process.on('uncaughtException', (err) => {
     },
     (e, s) => {}
   )
+  // global.amdb.createIndex(
+  //   {
+  //     _id: -1,
+  //     status: -1
+  //   },
+  //   (e, s) => {}
+  // )
 
   // await adb()
-  // await rdb()
+  await delay(5000)
+  console.log('RDB STARTED')
+  await rdb()
   // await trdb()
 })()
