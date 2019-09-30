@@ -1,5 +1,3 @@
-const { promisify } = require('util')
-
 const Koa = require('koa')
 const app = new Koa()
 const Router = require('koa-router')
@@ -12,7 +10,6 @@ const bodyParser = require('koa-bodyparser')
 const rdb = require('./modules/rdb')
 
 const MongoClient = require('mongodb').MongoClient
-const connectDatabase = promisify(MongoClient.connect)
 
 // global.adbRunning = false
 global.amdb = false
@@ -50,19 +47,23 @@ process.on('uncaughtException', (err) => {
 
   // DB Init
 
-  const { amerr, amdb } = await connectDatabase(
+  const client = new MongoClient(
     process.env.NODE_ENV == 'development'
       ? 'mongodb://localhost:27017/amdb'
       : 'mongodb://172.18.0.1:27017/amdb',
     { useNewUrlParser: true }
   )
-  if (amerr) {
+
+  try {
+    await client.connect()
+
+    global.amdb = client.db('amdb').collection('maindb')
+  } catch (err) {
     console.log('ERR when connect to AMDB')
-    console.log(amerr)
+    console.log(err)
     process.exit(1)
   }
-  global.amdb = amdb.db('amdb').collection('maindb')
-  collection.createIndex(
+  global.amdb.createIndex(
     {
       // _id: -1,
       roomid: -1,
@@ -71,7 +72,7 @@ process.on('uncaughtException', (err) => {
     },
     (e, s) => {}
   )
-  collection.createIndex(
+  global.amdb.createIndex(
     {
       _id: -1
     },
@@ -79,6 +80,6 @@ process.on('uncaughtException', (err) => {
   )
 
   // await adb()
-  await rdb()
+  // await rdb()
   // await trdb()
 })()
