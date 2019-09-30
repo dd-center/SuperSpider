@@ -60,7 +60,6 @@ const rdbCore = async (rid) => {
                     .replace(/[\r\n]/g, ''),
                   msgtr: '',
                   trstatus: 0,
-                  // 翻译者鉴权
                   tr: 0,
                   bcolor: item.background_bottom_color,
                   pcolor: item.background_price_color,
@@ -86,7 +85,6 @@ const rdbCore = async (rid) => {
                 .replace(/[\r\n]/g, ''),
               msgtr: '',
               trstatus: 0,
-              // 翻译者鉴权
               tr: 0,
               bcolor: item.background_bottom_color,
               pcolor: item.background_price_color,
@@ -119,7 +117,6 @@ const rdbCore = async (rid) => {
                     .replace(/[\r\n]/g, ''),
                   msgtr: '',
                   trstatus: 0,
-                  // 翻译者鉴权
                   tr: 0,
                   bcolor: item.background_bottom_color,
                   pcolor: item.background_price_color,
@@ -145,7 +142,6 @@ const rdbCore = async (rid) => {
                 .replace(/[\r\n]/g, ''),
               msgtr: '',
               trstatus: 0,
-              // 翻译者鉴权
               tr: 0,
               bcolor: item.background_bottom_color,
               pcolor: item.background_price_color,
