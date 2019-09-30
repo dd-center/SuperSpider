@@ -2,30 +2,10 @@
 const fs = require('fs')
 const readline = require('readline')
 
-const MongoClient = require('mongodb').MongoClient
-
 module.exports = async function() {
   console.log('TRDB STARTED')
-  const client = new MongoClient(
-    process.env.NODE_ENV == 'development'
-      ? 'mongodb://localhost:27017/amdb'
-      : 'mongodb://172.18.0.1:27017/amdb',
-    { useNewUrlParser: true }
-  )
-  let amdb = false
-  try {
-    await client.connect()
-
-    amdb = client.db('amdb').collection('maindb')
-  } catch (err) {
-    console.log('ERR when connect to AMDB')
-    console.log(err)
-    process.exit(1)
-  }
-  if (!amdb) {
-    console.log('ERR when check AMDB')
-    return
-  }
+  if (!global.amdb) return
+  const amdb = global.amdb
   const fileStream = fs.createReadStream('/scdb/tdb/tlist')
   const rl = readline.createInterface({
     input: fileStream,
