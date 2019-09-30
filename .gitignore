@@ -64,3 +64,5 @@ typings/
 temp.js
 temp/
 *package-lock.json
+*temp.js*
+*test.js*
