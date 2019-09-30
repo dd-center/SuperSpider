@@ -13,12 +13,15 @@
 | ANA     | 2163 |
 | Website | 2164 |
 | AtHome  | 2165 |
+| MDB     | 2166 |
 
 ## 数据格式（SCDB/TXTDB）
 
 除`ADB`中的数据为`ID:UID:TS（时间戳）:内容`之外，其他数据格式均为`ID:房间号:UID:TS（时间戳）:内容`。
 
 ## 数据格式（ADB/MongoDB）
+
+`mongodb://172.18.0.1:27017/amdb/maindb`
 
 ```json with comments
 {
@@ -28,6 +31,7 @@
   // 1: 仅有id和roomid
   // 2: 没有机翻
   // 3: 数据完整
+  // 4: 人工翻译
   "roomid": 1,
   "livets": 10000,
   "ts": 10000,
@@ -44,7 +48,8 @@
   // 翻译者
   "bcolor": "",
   "pcolor": "",
-  "exrate": ""
+  "exrate": "",
+  "hide": 0
 }
 ```
 
@@ -59,6 +64,16 @@ Run using:
 Internal build using:
 
 `docker build -t afanyiyu/superspider-db github.com/dd-center/SuperSpider#master:packages/superspider-db`
+
+### MDB
+
+Run using:
+
+`docker run -d -p 2166:2166 -v /scdb:/scdb afanyiyu/superspider-mdb`
+
+Internal build using:
+
+`docker build -t afanyiyu/superspider-mdb github.com/dd-center/SuperSpider#master:packages/superspider-mdb`
 
 ### Core
 
