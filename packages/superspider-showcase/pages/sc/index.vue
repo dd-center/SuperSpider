@@ -120,10 +120,8 @@ export default {
         !this.form.room ||
         isNaN(Number(this.form.room)) ||
         this.form.room === ''
-      ) {
-        this.$refs.form.validate()
+      )
         return
-      }
       let err = false
       const scData = await this.$axios({
         url: 'http://localhost:2162/sc/getData',

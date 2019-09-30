@@ -1,0 +1,221 @@
+<template>
+  <el-container>
+    <el-main>
+      <el-row>
+        <div align="center">
+          <div v-for="liveItem in scData" :key="liveItem.ts">
+            <h2>{{ new Date(liveItem.ts).toLocaleString() }}时开始的直播</h2>
+            <div
+              v-for="item in liveItem.data"
+              :key="item._id"
+              style="margin: 20px;"
+            >
+              <Superchat
+                :title="item._id"
+                :price="Number(item.price)"
+                :message="item.msg"
+                :messagejpn="item.msgtr !== '' ? item.msgtr : item.msgjpn"
+                avatar="https://static.hdslb.com/images/member/noface.gif"
+                :contentcolor="item.bcolor"
+                :headercolor="item.pcolor"
+                :exrate="item.exRate"
+                style="max-width: 700px;"
+                align="left"
+                @click.native="submitForm.id = item._id"
+              ></Superchat>
+            </div>
+          </div>
+        </div>
+      </el-row>
+    </el-main>
+    <el-aside width="600px" style="margin-right: 80px;">
+      <el-row>
+        <h2 align="center">BiliSC/Dash (β)</h2>
+      </el-row>
+      <el-row>
+        <el-form
+          ref="form"
+          :model="form"
+          label-width="150px"
+          @submit.native.prevent
+        >
+          <el-form-item label="房间号">
+            <el-input
+              v-model="form.room"
+              autofocus
+              @keyup.enter.native="startFetchData"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              type="primary"
+              @click="startFetchData"
+              @keyup.enter.native="startFetchData"
+              >Go</el-button
+            >
+          </el-form-item>
+        </el-form>
+      </el-row>
+      <el-row>
+        <el-form
+          ref="submitForm"
+          :model="submitForm"
+          label-width="150px"
+          @submit.native.prevent
+        >
+          <el-form-item label="用户名">
+            <el-input v-model="submitForm.username"></el-input>
+          </el-form-item>
+          <el-form-item label="密码">
+            <el-input v-model="submitForm.password"></el-input>
+          </el-form-item>
+          <el-form-item label="消息ID">
+            <el-input v-model="submitForm.id"></el-input>
+          </el-form-item>
+          <el-form-item label="翻译">
+            <el-input v-model="submitForm.tr"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="startHide">隐藏消息</el-button>
+            <el-button type="primary" @click="startSubmit">提交翻译</el-button>
+          </el-form-item>
+        </el-form>
+      </el-row>
+      <el-row>
+        <p>{{ status }}</p>
+      </el-row>
+      <el-row style="margin: 30px;">
+        <a href="https://github.com/dd-center/SuperSpider"
+          ><img
+            alt="Star BiliSC! "
+            src="http://githubbadges.com/star.svg?user=dd-center&amp;repo=SuperSpider&amp;style=flat"
+        /></a>
+      </el-row>
+    </el-aside>
+  </el-container>
+</template>
+
+<script>
+import Superchat from '~/components/superchat.vue'
+export default {
+  head: {
+    title: 'BiliSC/Dash'
+  },
+  layout: 'empty',
+  components: {
+    Superchat
+  },
+  data() {
+    return {
+      scData: [],
+      form: {
+        room: ''
+      },
+      submitForm: {
+        username: '',
+        password: '',
+        id: '',
+        tr: ''
+      },
+      started: false,
+      interval: false,
+      status: ''
+    }
+  },
+  async mounted() {
+    if (this.$route.query.roomid) {
+      this.form.room = this.$route.query.roomid
+      await this.startFetchData()
+    }
+  },
+  methods: {
+    async startFetchData() {
+      await this.fetchData()
+      if (this.started === this.form.room) return
+      if (this.interval) clearInterval(this.interval)
+      this.interval = setInterval(async () => {
+        await this.fetchData()
+      }, 8000)
+      this.started = this.form.room
+    },
+    async fetchData() {
+      if (
+        !this.form.room ||
+        isNaN(Number(this.form.room)) ||
+        this.form.room === ''
+      )
+        return
+      let err = false
+      const scData = await this.$axios({
+        url: 'http://localhost:2162/sc/getData',
+        method: 'POST',
+        data: 'roomid=' + this.form.room,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).catch((e) => {
+        err = true
+      })
+      if (err) return
+      this.scData = scData.data
+    },
+    async startSubmit() {
+      if (
+        this.submitForm.username === '' ||
+        this.submitForm.password === '' ||
+        this.submitForm.id === '' ||
+        this.submitForm.tr === ''
+      )
+        return
+      let err = false
+      const res = await this.$axios({
+        url: 'http://localhost:2162/sc/submit',
+        method: 'POST',
+        data: 'roomid=' + this.form.room, // QS
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).catch((e) => {
+        err = true
+      })
+      if (err) {
+        this.status = '提交失败'
+        return
+      }
+      this.status =
+        Number(res.data) === 0
+          ? '提交成功'
+          : '权限更高的翻译者已经提交了这条消息的翻译。'
+    },
+    async startHide() {
+      if (
+        this.submitForm.username === '' ||
+        this.submitForm.password === '' ||
+        this.submitForm.id === ''
+      )
+        return
+      let err = false
+      const res = await this.$axios({
+        url: 'http://localhost:2162/sc/hide',
+        method: 'POST',
+        data: 'roomid=' + this.form.room, // QS
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).catch((e) => {
+        err = true
+      })
+      if (err) {
+        this.status = '隐藏失败'
+        return
+      }
+      this.status =
+        Number(res.data) === 0
+          ? '隐藏成功'
+          : '权限更高的翻译者已经允许了这条消息的显示。'
+    }
+  }
+}
+</script>
+
+<style></style>
