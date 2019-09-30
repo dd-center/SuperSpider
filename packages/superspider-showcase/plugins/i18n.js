@@ -10,16 +10,15 @@ export default ({ app, store }) => {
     locale: store.state.locale,
     fallbackLocale: 'ja',
     messages: {
-      en: require('~/locales/en.json'),
       ja: require('~/locales/ja.json'),
-      zhHans: require('~/locales/zhHans.json')
+      zh: require('~/locales/zh.json')
     }
   })
 
   app.i18n.path = (link) => {
-    if (app.i18n.locale === app.i18n.fallbackLocale) {
-      return `/${link}`
-    }
+    // if (app.i18n.locale === app.i18n.fallbackLocale) {
+    //   return `/${link}`
+    // }
 
     // return `/${app.i18n.locale}/${link}`
     return `/${link}`
