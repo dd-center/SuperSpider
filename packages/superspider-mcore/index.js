@@ -6,6 +6,10 @@ const router = new Router()
 const bodyParser = require('koa-bodyparser')
 const cors = require('@koa/cors')
 
+const MongoClient = require('mongodb').MongoClient
+global.amdb = false
+global.udb = false
+
 process.on('uncaughtException', (err) => {
   console.log('ERR unc expt')
   console.log(err)
@@ -40,4 +44,35 @@ process.on('uncaughtException', (err) => {
   app.use(router.routes())
 
   app.listen(2162)
+
+  // DB Init
+
+  const client = new MongoClient(
+    process.env.NODE_ENV == 'development'
+      ? 'mongodb://localhost:27017/amdb'
+      : 'mongodb://admin:' +
+        process.env.MONGODB_PASS +
+        '@172.18.0.1:27017/amdb?authMechanism=DEFAULT',
+    { useNewUrlParser: true }
+  )
+
+  try {
+    await client.connect()
+
+    const db = client.db('amdb')
+    global.amdb = db.collection('maindb')
+    global.udb = db.collection('udb')
+
+    global.udb.createIndex(
+      {
+        username: -1,
+        password: -1
+      },
+      (e, s) => {}
+    )
+  } catch (err) {
+    console.log('ERR when connect to AMDB/UDB')
+    console.log(err)
+    process.exit(1)
+  }
 })()
