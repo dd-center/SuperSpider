@@ -38,7 +38,7 @@ module.exports = async function() {
       const roomid = line.split(':')[1]
       if (isNaN(Number(id)) || isNaN(Number(roomid))) continue
       const result = await amdb
-        .find({ _id: id })
+        .find({ _id: Number(id) })
         .limit(1)
         .toArray()
       if (result.length !== 0) continue
