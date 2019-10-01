@@ -67,7 +67,7 @@
             <el-input v-model="submitForm.username"></el-input>
           </el-form-item>
           <el-form-item label="密码">
-            <el-input v-model="submitForm.password"></el-input>
+            <el-input v-model="submitForm.password" type="password"></el-input>
           </el-form-item>
           <el-form-item label="消息ID">
             <el-input v-model="submitForm.id"></el-input>
