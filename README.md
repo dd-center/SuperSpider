@@ -67,7 +67,7 @@ Internal build using:
 
 Run using:
 
-`docker run -d -p 2165:2165 -p 2166:2166 -v /scdb:/scdb afanyiyu/superspider-mdb`
+`docker run -d -p 2165:2165 -p 2166:2166 -v /scdb:/scdb -e MONGODB_PASS=PASS afanyiyu/superspider-mdb`
 
 Internal build using:
 
@@ -87,7 +87,7 @@ Internal build using:
 
 Run using:
 
-`docker run -d -p 2162:2162 afanyiyu/superspider-mcore`
+`docker run -d -p 2162:2162 -e MONGODB_PASS=PASS afanyiyu/superspider-mcore`
 
 Internal build using:
 
