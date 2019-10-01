@@ -96,6 +96,7 @@
 </template>
 
 <script>
+import qs from 'qs'
 import Superchat from '~/components/superchat.vue'
 export default {
   head: {
@@ -147,7 +148,7 @@ export default {
         return
       let err = false
       const scData = await this.$axios({
-        url: 'http://localhost:2162/sc/getData',
+        url: 'https://api.bilisc.com/sc/getData',
         method: 'POST',
         data: 'roomid=' + this.form.room,
         headers: {
@@ -169,9 +170,14 @@ export default {
         return
       let err = false
       const res = await this.$axios({
-        url: 'http://localhost:2162/sc/submit',
+        url: 'https://api.bilisc.com/sc/submit',
         method: 'POST',
-        data: 'roomid=' + this.form.room, // QS
+        data: qs.stringify({
+          username: this.submitForm.username,
+          password: this.submitForm.password,
+          id: this.submitForm.id,
+          tr: this.submitForm.tr
+        }),
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -196,9 +202,13 @@ export default {
         return
       let err = false
       const res = await this.$axios({
-        url: 'http://localhost:2162/sc/hide',
+        url: 'https://api.bilisc.com/sc/hide',
         method: 'POST',
-        data: 'roomid=' + this.form.room, // QS
+        data: qs.stringify({
+          username: this.submitForm.username,
+          password: this.submitForm.password,
+          id: this.submitForm.id
+        }),
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
