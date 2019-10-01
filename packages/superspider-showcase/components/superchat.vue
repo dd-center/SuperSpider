@@ -33,7 +33,11 @@
             class="style-scope yt-live-chat-paid-message-renderer"
             style="transform:scale(0.9);transform-origin: left;"
           >
-            {{ '￥' + price + ' = ' + price * exrate + '円' }}
+            {{
+              hiderate
+                ? '￥' + price
+                : '￥' + price + ' = ' + price * exrate + '円'
+            }}
           </div>
         </div>
       </div>
@@ -95,6 +99,10 @@ export default {
     exrate: {
       type: Number,
       default: 14.7
+    },
+    hiderate: {
+      type: Boolean,
+      default: false
     }
   }
   // data() {

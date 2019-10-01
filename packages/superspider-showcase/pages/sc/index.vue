@@ -60,14 +60,22 @@
               style="margin: 20px;"
             >
               <Superchat
+                v-if="Number(item.hide) == 0"
                 :title="item.uname"
                 :price="Number(item.price)"
                 :message="item.msg"
-                :messagejpn="item.msgtr !== '' ? item.msgtr : item.msgjpn"
+                :messagejpn="
+                  $route.query.lang == 'zh'
+                    ? ''
+                    : item.msgtr !== ''
+                    ? item.msgtr
+                    : item.msgjpn
+                "
                 :avatar="item.avatar"
                 :contentcolor="item.bcolor"
                 :headercolor="item.pcolor"
                 :exrate="item.exRate"
+                :hiderate="$route.query.lang == 'zh'"
                 style="max-width: 700px;"
                 align="left"
               ></Superchat>
