@@ -124,7 +124,7 @@ export default {
         return
       let err = false
       const scData = await this.$axios({
-        url: 'http://localhost:2162/sc/getData',
+        url: 'https://api.bilisc.com/sc/getData',
         method: 'POST',
         data: 'roomid=' + this.form.room,
         headers: {
