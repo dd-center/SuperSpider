@@ -45,7 +45,7 @@ const rdbCore = async (rid) => {
       try {
         if (hasTr) {
           const result = await amdb
-            .find({ _id: Number(item.id), status: 3 })
+            .find({ _id: Number(item.id) })
             .limit(1)
             .toArray()
           if (result.length !== 0) {
