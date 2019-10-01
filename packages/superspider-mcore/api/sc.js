@@ -106,7 +106,7 @@ sc.post('/submit', async (ctx, next) => {
       .find({ _id: Number(ctx.request.body.id) })
       .limit(1)
       .toArray()
-    if (item.trstatus > ust) {
+    if (Number(item.trstatus) > Number(ust)) {
       ctx.response.status = 200
       ctx.response.body = 1
       await next()
@@ -172,7 +172,7 @@ sc.post('/hide', async (ctx, next) => {
       .find({ _id: Number(ctx.request.body.id) })
       .limit(1)
       .toArray()
-    if (item.trstatus > ust) {
+    if (Number(item.trstatus) > Number(ust)) {
       ctx.response.status = 200
       ctx.response.body = 1
       await next()
