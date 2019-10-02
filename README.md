@@ -87,7 +87,7 @@ Internal build using:
 
 Run using:
 
-`docker run -d -p 2162:2162 -e MONGODB_PASS=PASS afanyiyu/superspider-mcore`
+`docker run -d -p 2162:2162 -e MONGODB_PASS=PASS -e MONGODB_IP=IP afanyiyu/superspider-mcore`
 
 Internal build using:
 
