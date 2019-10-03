@@ -15,6 +15,7 @@ const MongoClient = require('mongodb').MongoClient
 
 // global.adbRunning = false
 global.amdb = false
+global.utrdb = false
 // global.rmdb = false
 // global.umdb = false
 
@@ -64,6 +65,7 @@ process.on('uncaughtException', (err) => {
     await client.connect()
 
     global.amdb = client.db('amdb').collection('maindb')
+    global.utrdb = client.db('amdb').collection('utrdb')
   } catch (err) {
     console.log('ERR when connect to AMDB')
     console.log(err)
@@ -87,6 +89,12 @@ process.on('uncaughtException', (err) => {
   global.amdb.createIndex(
     {
       roomid: -1
+    },
+    (e, s) => {}
+  )
+  global.utrdb.createIndex(
+    {
+      uname: -1
     },
     (e, s) => {}
   )

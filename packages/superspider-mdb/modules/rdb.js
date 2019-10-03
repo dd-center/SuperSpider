@@ -4,6 +4,7 @@ const schedule = require('node-schedule')
 
 const rws = require('../utils/rws')
 const athome = require('./athome')
+const nameConv = require('../utils/nameConv')
 
 const events = require('events')
 const emitter = new events.EventEmitter()
@@ -16,6 +17,8 @@ let exRate = 14.7
 const rdbCore = async (rid) => {
   if (!global.amdb) return
   const amdb = global.amdb
+  if (!global.utrdb) return
+  const utrdb = global.utrdb
   if (!tsList[rid]) {
     tsList[rid] = new Date().getTime()
   }
@@ -40,6 +43,30 @@ const rdbCore = async (rid) => {
       return
     }
     for (const item of data.data.list) {
+      const uname = item.user_info.uname
+      let unamejpn = ''
+      const unameFinded = await utrdb
+        .find({ uname })
+        .limit(1)
+        .toArray()
+      if (
+        unameFinded.length > 0 &&
+        unameFinded[0].unamejpn &&
+        unameFinded[0].unamejpn !== ''
+      ) {
+        unamejpn = unameFinded[0].unamejpn
+      } else {
+        try {
+          unamejpn = await nameConv(uname)
+          if (unameFinded.length > 0) {
+            await utrdb.updateOne({ uname }, { $set: { unamejpn } })
+          } else {
+            await utrdb.updateOne({ uname, unamejpn })
+          }
+        } catch (e) {
+          console.log('ERR at fetching uname ' + uname)
+        }
+      }
       const hasTr =
         item.message_jpn.replace(/\s*/g, '').replace(/[\r\n]/g, '') !== ''
       try {
@@ -61,6 +88,7 @@ const rdbCore = async (rid) => {
                   livets: Number(tsList[rid]),
                   ts: Number(item.start_time),
                   uname: item.user_info.uname,
+                  unamejpn,
                   avatar: item.user_info.face,
                   price: Number(item.price),
                   msg: item.message.replace(/\s*/g, '').replace(/[\r\n]/g, ''),
@@ -86,6 +114,7 @@ const rdbCore = async (rid) => {
               livets: Number(tsList[rid]),
               ts: Number(item.start_time),
               uname: item.user_info.uname,
+              unamejpn,
               avatar: item.user_info.face,
               price: Number(item.price),
               msg: item.message.replace(/\s*/g, '').replace(/[\r\n]/g, ''),
@@ -118,6 +147,7 @@ const rdbCore = async (rid) => {
                   livets: Number(tsList[rid]),
                   ts: Number(item.start_time),
                   uname: item.user_info.uname,
+                  unamejpn,
                   avatar: item.user_info.face,
                   price: Number(item.price),
                   msg: item.message.replace(/\s*/g, '').replace(/[\r\n]/g, ''),
@@ -143,6 +173,7 @@ const rdbCore = async (rid) => {
               livets: Number(tsList[rid]),
               ts: Number(item.start_time),
               uname: item.user_info.uname,
+              unamejpn,
               avatar: item.user_info.face,
               price: Number(item.price),
               msg: item.message.replace(/\s*/g, '').replace(/[\r\n]/g, ''),
