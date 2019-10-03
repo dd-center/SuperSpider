@@ -4,9 +4,9 @@
       <el-row>
         <h2 align="center">BiliSC (γ)</h2>
       </el-row>
-      <el-row>
+      <!-- <el-row>
         <LocaleChanger style="margin: 40px;"></LocaleChanger>
-      </el-row>
+      </el-row> -->
       <el-row>
         <el-form
           ref="form"
@@ -14,6 +14,12 @@
           label-width="150px"
           @submit.native.prevent
         >
+          <el-form-item label="语言">
+            <LocaleChanger></LocaleChanger>
+          </el-form-item>
+          <el-form-item label="时间显示">
+            <el-switch v-model="showTime"></el-switch>
+          </el-form-item>
           <el-form-item :label="$t('sc.channelid')">
             <el-input
               v-model="form.room"
@@ -54,7 +60,7 @@
       <el-row>
         <div align="center">
           <div v-for="liveItem in scData" :key="liveItem.ts">
-            <h2>
+            <h2 v-if="showTime">
               {{ new Date(liveItem.ts).toLocaleString() + $t('sc.livets') }}
             </h2>
             <div
@@ -125,7 +131,8 @@ export default {
         room: ''
       },
       started: false,
-      interval: false
+      interval: false,
+      showTime: true
     }
   },
   async mounted() {
