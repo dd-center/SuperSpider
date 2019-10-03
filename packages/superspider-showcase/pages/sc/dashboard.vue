@@ -30,7 +30,10 @@
     </el-main>
     <el-aside width="600px" style="margin-right: 80px;">
       <el-row>
-        <h2 align="center">BiliSC/Dash (β)</h2>
+        <h2 align="center">BiliSC/Dash (γ)</h2>
+      </el-row>
+      <el-row>
+        <LocaleChanger></LocaleChanger>
       </el-row>
       <el-row>
         <el-form
@@ -98,13 +101,15 @@
 <script>
 import qs from 'qs'
 import Superchat from '~/components/superchat.vue'
+import LocaleChanger from '~/components/localechanger.vue'
 export default {
   head: {
     title: 'BiliSC/Dash'
   },
   layout: 'empty',
   components: {
-    Superchat
+    Superchat,
+    LocaleChanger
   },
   data() {
     return {
@@ -191,7 +196,7 @@ export default {
       this.status =
         Number(res.data) === 0
           ? '提交成功'
-          : '权限更高的翻译者已经提交了这条消息的翻译。'
+          : '权限更高的翻译者已经锁定了这条消息的翻译。'
     },
     async startHide() {
       if (

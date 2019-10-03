@@ -2,7 +2,10 @@
   <el-container>
     <el-aside width="300px">
       <el-row>
-        <h2 align="center">BiliSC (β)</h2>
+        <h2 align="center">BiliSC (γ)</h2>
+      </el-row>
+      <el-row>
+        <LocaleChanger style="margin: 40px;"></LocaleChanger>
       </el-row>
       <el-row>
         <el-form
@@ -61,11 +64,16 @@
             >
               <Superchat
                 v-if="Number(item.hide) == 0"
-                :title="item.uname"
+                :title="
+                  item.uname +
+                    ' (' +
+                    ($i18n.locale !== 'ja' ? '' : item.unamejpn || '') +
+                    ')'
+                "
                 :price="Number(item.price)"
                 :message="item.msg"
                 :messagejpn="
-                  $route.query.lang == 'zh'
+                  $i18n.locale !== 'ja'
                     ? ''
                     : item.msgtr !== ''
                     ? item.msgtr
@@ -75,7 +83,7 @@
                 :contentcolor="item.bcolor"
                 :headercolor="item.pcolor"
                 :exrate="item.exRate"
-                :hiderate="$route.query.lang == 'zh'"
+                :hiderate="$i18n.locale == 'zh'"
                 style="max-width: 700px;"
                 align="left"
               ></Superchat>
@@ -89,13 +97,15 @@
 
 <script>
 import Superchat from '~/components/superchat.vue'
+import LocaleChanger from '~/components/localechanger.vue'
 export default {
   head: {
     title: 'BiliSC'
   },
   layout: 'empty',
   components: {
-    Superchat
+    Superchat,
+    LocaleChanger
   },
   data() {
     return {
