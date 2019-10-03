@@ -75,7 +75,9 @@
               <Superchat
                 v-if="Number(item.hide) == 0"
                 :title="
-                  item.unamejpn && item.unamejpn !== ''
+                  $i18n.locale !== 'ja'
+                    ? item.uname
+                    : item.unamejpn && item.unamejpn !== ''
                     ? item.unamejpn
                     : item.uname
                 "
