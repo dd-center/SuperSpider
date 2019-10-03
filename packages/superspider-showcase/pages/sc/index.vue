@@ -132,7 +132,7 @@ export default {
       },
       started: false,
       interval: false,
-      showTime: true
+      showTime: this.$route.query.showTime || true
     }
   },
   async mounted() {
