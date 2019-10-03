@@ -53,6 +53,16 @@
 
 ## Deploy
 
+### ANA
+
+Run using:
+
+`docker run -d -p 2163:2163 -e MONGODB_PASS=PASS -e MONGODB_IP=IP afanyiyu/superspider-ana`
+
+Internal build using:
+
+`docker build -t afanyiyu/superspider-ana github.com/dd-center/SuperSpider#master:packages/superspider-ana`
+
 ### DB
 
 Run using:
