@@ -68,7 +68,9 @@
                   item.uname +
                     ($i18n.locale !== 'ja'
                       ? ''
-                      : ' (' + item.unamejpn + ')' || '')
+                      : item.unamejpn
+                      ? ' (' + item.unamejpn + ')'
+                      : '')
                 "
                 :price="Number(item.price)"
                 :message="item.msg"
