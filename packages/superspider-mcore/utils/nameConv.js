@@ -8,7 +8,7 @@ module.exports = async function(name) {
     method: 'POST',
     form: {
       contents: name,
-      option: 2
+      option: 4
     },
     transform: function(body) {
       return cheerio.load(body)
