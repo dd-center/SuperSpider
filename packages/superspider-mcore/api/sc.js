@@ -30,6 +30,7 @@ sc.post('/getData', async (ctx, next) => {
       const roomid = Number(ctx.request.body.roomid)
       const finded = await amdb
         .find({ roomid })
+        .sort('ts', -1)
         .limit(400)
         .toArray()
       const tsList = new Array()
@@ -41,6 +42,9 @@ sc.post('/getData', async (ctx, next) => {
         if (!tsList.includes(livets)) tsList.push(livets)
         if (!rList[livets]) rList[livets] = new Array()
         rList[livets].push(item)
+      }
+      for (const tl of rList) {
+        tl.sort((a, b) => Number(b.ts) - Number(a.ts))
       }
       const output = []
       for (const ts of tsList) {
