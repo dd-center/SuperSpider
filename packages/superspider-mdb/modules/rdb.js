@@ -51,7 +51,7 @@ const rdbCore = async (rid) => {
           if (result.length !== 0) {
             if (Number(result[0].status) > 2) continue
             // Replace 3
-            await amdb.replaceOne(
+            await amdb.updateMany(
               { _id: Number(item.id) },
               {
                 $set: {
@@ -108,7 +108,7 @@ const rdbCore = async (rid) => {
             .toArray()
           if (result.length !== 0) {
             // Replace 2
-            await amdb.replaceOne(
+            await amdb.updateMany(
               { _id: Number(item.id) },
               {
                 $set: {
