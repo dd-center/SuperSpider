@@ -66,9 +66,9 @@
                 v-if="Number(item.hide) == 0"
                 :title="
                   item.uname +
-                    ' (' +
-                    ($i18n.locale !== 'ja' ? '' : item.unamejpn || '') +
-                    ')'
+                    ($i18n.locale !== 'ja'
+                      ? ''
+                      : ' (' + item.unamejpn + ')' || '')
                 "
                 :price="Number(item.price)"
                 :message="item.msg"
