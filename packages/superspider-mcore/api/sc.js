@@ -30,7 +30,7 @@ sc.post('/getData', async (ctx, next) => {
       const roomid = Number(ctx.request.body.roomid)
       const finded = await amdb
         .find({ roomid })
-        .limit(50)
+        .limit(400)
         .toArray()
       const tsList = new Array()
       const rList = []
