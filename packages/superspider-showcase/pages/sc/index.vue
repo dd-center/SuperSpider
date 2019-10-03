@@ -62,15 +62,22 @@
               :key="item._id"
               style="margin: 20px;"
             >
-              <Superchat
-                v-if="Number(item.hide) == 0"
-                :title="
+              <!--
+                              :title="
                   item.uname +
                     ($i18n.locale !== 'ja'
                       ? ''
                       : item.unamejpn
                       ? ' (' + item.unamejpn + ')'
                       : '')
+                "
+            -->
+              <Superchat
+                v-if="Number(item.hide) == 0"
+                :title="
+                  item.unamejpn && item.unamejpn !== ''
+                    ? item.unamejpn
+                    : item.uname
                 "
                 :price="Number(item.price)"
                 :message="item.msg"
