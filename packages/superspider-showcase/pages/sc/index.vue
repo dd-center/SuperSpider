@@ -2,10 +2,15 @@
   <el-container>
     <el-aside width="300px">
       <el-row>
-        <h2 align="center">BiliSC (γ)</h2>
+        <h2 align="center">BiliSC (δ)</h2>
       </el-row>
       <!-- <el-row>
-        <LocaleChanger style="margin: 40px;"></LocaleChanger>
+        <el-link
+          href="https://docs.bilisc.com"
+          target="_blank"
+          type="primary"
+          >{{ $t('common.tutorial') }}</el-link
+        >
       </el-row> -->
       <el-row>
         <el-form
@@ -14,16 +19,32 @@
           label-width="150px"
           @submit.native.prevent
         >
-          <el-form-item label="语言">
+          <el-form-item>
+            <el-link
+              href="https://docs.bilisc.com"
+              target="_blank"
+              type="primary"
+              >{{ $t('common.tutorial') }}</el-link
+            >
+          </el-form-item>
+          <el-form-item :label="$t('common.lang')">
             <LocaleChanger></LocaleChanger>
           </el-form-item>
-          <el-form-item label="时间显示">
+          <el-form-item :label="$t('common.showTime')">
             <el-switch v-model="showTime"></el-switch>
           </el-form-item>
-          <el-form-item label="カタカナ显示">
-            <el-switch v-model="showKana"></el-switch>
+          <el-form-item :label="$t('common.showKana')">
+            <el-switch
+              v-if="$i18n.locale == 'ja'"
+              v-model="showKana"
+            ></el-switch>
+            <el-switch
+              v-if="$i18n.locale !== 'ja'"
+              :value="false"
+              disabled
+            ></el-switch>
           </el-form-item>
-          <el-form-item :label="$t('sc.channelid')">
+          <el-form-item :label="$t('common.channelid')">
             <el-input
               v-model="form.room"
               autofocus
@@ -44,7 +65,9 @@
         <p>{{ $t('sc.t1') }}</p>
         <p>{{ $t('sc.t2') }}</p>
         <p>{{ $t('sc.t3') }}</p>
-        <p>http://bilisc.com/?roomid={{ form.room || $t('sc.channelid') }}</p>
+        <p>
+          http://bilisc.com/?roomid={{ form.room || $t('common.channelid') }}
+        </p>
         <p>
           {{ $t('sc.t4')
           }}<a href="https://faithtown.tech/" target="_blank">Il Harper</a

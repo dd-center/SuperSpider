@@ -30,7 +30,7 @@
     </el-main>
     <el-aside width="600px" style="margin-right: 80px;">
       <el-row>
-        <h2 align="center">BiliSC/Dash (γ)</h2>
+        <h2 align="center">BiliSC/Dash (δ)</h2>
       </el-row>
       <!-- <el-row>
         <LocaleChanger></LocaleChanger>
@@ -42,9 +42,9 @@
           label-width="150px"
           @submit.native.prevent
         >
-          <el-form-item label="语言">
+          <!-- <el-form-item label="语言">
             <LocaleChanger></LocaleChanger>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="房间号">
             <el-input
               v-model="form.room"
@@ -104,15 +104,15 @@
 <script>
 import qs from 'qs'
 import Superchat from '~/components/superchat.vue'
-import LocaleChanger from '~/components/localechanger.vue'
+// import LocaleChanger from '~/components/localechanger.vue'
 export default {
   head: {
     title: 'BiliSC/Dash'
   },
   layout: 'empty',
   components: {
-    Superchat,
-    LocaleChanger
+    Superchat
+    // LocaleChanger
   },
   data() {
     return {
