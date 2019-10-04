@@ -4,7 +4,7 @@ const launch = new Router()
 const untr = require('../module/untr')
 
 // /launch
-launch.post('/', async (ctx, next) => {
+launch.get('/', async (ctx, next) => {
   try {
     untr()
     ctx.response.status = 200

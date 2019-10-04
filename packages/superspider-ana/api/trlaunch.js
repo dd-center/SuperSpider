@@ -4,7 +4,7 @@ const launch = new Router()
 const core = require('../module/core')
 
 // /launch
-launch.post('/', async (ctx, next) => {
+launch.get('/', async (ctx, next) => {
   try {
     core()
     ctx.response.status = 200
