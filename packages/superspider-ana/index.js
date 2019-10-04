@@ -17,6 +17,7 @@ process.on('uncaughtException', (err) => {
 })
 
 global.amdb = false
+global.utrdb = false
 
 // schedule.scheduleJob('*/5 * * * *', adb)
 ;(async () => {
@@ -57,6 +58,7 @@ global.amdb = false
     await client.connect()
 
     global.amdb = client.db('amdb').collection('maindb')
+    global.utrdb = client.db('amdb').collection('utrdb')
   } catch (err) {
     console.log('ERR when connect to AMDB')
     console.log(err)
