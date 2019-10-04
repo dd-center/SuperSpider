@@ -66,3 +66,4 @@ temp/
 *package-lock.json
 *temp.js*
 *test*.js*
+*dist*.zip
