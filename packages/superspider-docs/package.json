@@ -1,0 +1,15 @@
+{
+  "name": "superspider-docs",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "author": "Il Harper",
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.1.0"
+  }
+}
