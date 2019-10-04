@@ -20,6 +20,9 @@
           <el-form-item label="时间显示">
             <el-switch v-model="showTime"></el-switch>
           </el-form-item>
+          <el-form-item label="カタカナ显示">
+            <el-switch v-model="showKana"></el-switch>
+          </el-form-item>
           <el-form-item :label="$t('sc.channelid')">
             <el-input
               v-model="form.room"
@@ -81,7 +84,7 @@
               <Superchat
                 v-if="Number(item.hide) == 0"
                 :title="
-                  $i18n.locale !== 'ja'
+                  $i18n.locale !== 'ja' || !showKana
                     ? item.uname
                     : item.unamejpn && item.unamejpn !== ''
                     ? item.unamejpn
@@ -132,7 +135,8 @@ export default {
       },
       started: false,
       interval: false,
-      showTime: this.$route.query.showTime || true
+      showTime: this.$route.query.showTime || true,
+      showKana: this.$route.query.showKana || true
     }
   },
   async mounted() {
