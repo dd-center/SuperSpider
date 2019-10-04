@@ -61,10 +61,11 @@ const rdbCore = async (rid) => {
           if (unameFinded.length > 0) {
             await utrdb.updateOne({ uname }, { $set: { unamejpn } })
           } else {
-            await utrdb.updateOne({ uname, unamejpn })
+            await utrdb.insertOne({ uname, unamejpn })
           }
         } catch (e) {
           console.log('ERR at fetching uname ' + uname)
+          console.log(e)
         }
       }
       const hasTr =
