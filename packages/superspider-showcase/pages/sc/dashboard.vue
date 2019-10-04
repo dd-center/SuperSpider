@@ -11,7 +11,7 @@
               style="margin: 20px;"
             >
               <Superchat
-                :title="item._id"
+                :title="item._id + item.hide > 0 ? '（隐藏）' : ''"
                 :price="Number(item.price)"
                 :message="item.msg"
                 :messagejpn="item.msgtr !== '' ? item.msgtr : item.msgjpn"
@@ -230,7 +230,7 @@ export default {
       this.status =
         Number(res.data) === 0
           ? '隐藏成功'
-          : '权限更高的翻译者已经允许了这条消息的显示。'
+          : '权限更高的翻译者已经隐藏了这条消息。'
     }
   }
 }
