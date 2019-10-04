@@ -83,7 +83,7 @@ const rdbCore = async (rid) => {
               { _id: Number(item.id) },
               {
                 $set: {
-                  _id: Number(item.id),
+                  // _id: Number(item.id),
                   status: 3,
                   roomid: Number(rid),
                   livets: Number(tsList[rid]),
@@ -142,7 +142,7 @@ const rdbCore = async (rid) => {
               { _id: Number(item.id) },
               {
                 $set: {
-                  _id: Number(item.id),
+                  // _id: Number(item.id),
                   status: 2,
                   roomid: Number(rid),
                   livets: Number(tsList[rid]),
@@ -217,7 +217,7 @@ module.exports = async function() {
     ).data.exchange_rate
   )
   emitter.on('LIVE', (data) => {
-    schList[data.roomid] = schedule.scheduleJob('*/50 * * * * *', async () => {
+    schList[data.roomid] = schedule.scheduleJob('*/40 * * * * *', async () => {
       await rdbCore(data.roomid)
     })
   })
