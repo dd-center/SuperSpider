@@ -103,16 +103,6 @@ Internal build using:
 
 `docker build -t afanyiyu/superspider-mcore github.com/dd-center/SuperSpider#master:packages/superspider-mcore`
 
-### ANA
-
-Run using:
-
-`docker run -d -p 2163:2163 -v /scdb:/scdb afanyiyu/superspider-ana`
-
-Internal build using:
-
-`docker build -t afanyiyu/superspider-ana github.com/dd-center/SuperSpider#master:packages/superspider-ana`
-
 ### Website
 
 Run using:
