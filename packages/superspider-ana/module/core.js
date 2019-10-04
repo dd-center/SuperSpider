@@ -4,7 +4,7 @@ module.exports = async function() {
   if (!global.amdb) return
   const amdb = global.amdb
 
-  const cursor = amdb.find({ status: 2 })
+  const cursor = amdb.find({ msgjpn: '' })
   while (await cursor.hasNext()) {
     const item = await cursor.next()
     const data = JSON.parse(
@@ -18,7 +18,7 @@ module.exports = async function() {
     try {
       await amdb.updateOne(
         { _id: item._id },
-        { $set: { msgjpn: data.message_jpn, status: 3 } }
+        { $set: { msgjpn: data.message_jpn, status: data !== '' ? 3 : 2 } }
       )
     } catch (e) {
       console.log('ERR at id ' + item._id)
