@@ -13,7 +13,8 @@ module.exports = async function() {
           item._id
       )
     ).data
-    // console.log(`id: ${item._id} / jpn: ${data.message_jpn}`)
+    console.log('TR: ')
+    console.log(`id: ${item._id} / jpn: ${data.message_jpn}`)
     try {
       await amdb.updateOne(
         { _id: item._id },
