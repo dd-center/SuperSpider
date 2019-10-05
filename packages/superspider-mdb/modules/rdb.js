@@ -5,6 +5,7 @@ const schedule = require('node-schedule')
 const rws = require('../utils/rws')
 const athome = require('./athome')
 const nameConv = require('../utils/nameConv')
+const onLive = require('../utils/onLive')
 
 const events = require('events')
 const emitter = new events.EventEmitter()
@@ -211,6 +212,16 @@ const rdbClose = async (rid) => {
 
 module.exports = async function() {
   rws(emitter)
+  try {
+    for (const item of await onLive()) {
+      schList[item] = schedule.scheduleJob('*/40 * * * * *', async () => {
+        await rdbCore(item)
+      })
+    }
+  } catch (e) {
+    console.log('ERR when fetch onLive')
+    console.log(e)
+  }
   exRate = Number(
     JSON.parse(
       await rp('https://api.live.bilibili.com/userext/v1/Conf/getExchangeRate')
