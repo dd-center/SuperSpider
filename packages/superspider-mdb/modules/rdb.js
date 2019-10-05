@@ -80,30 +80,14 @@ const rdbCore = async (rid) => {
           if (result.length !== 0) {
             if (Number(result[0].status) > 2) continue
             // Replace 3
-            await amdb.updateMany(
+            await amdb.updateOne(
               { _id: Number(item.id) },
               {
                 $set: {
-                  // _id: Number(item.id),
                   status: 3,
-                  roomid: Number(rid),
-                  livets: Number(tsList[rid]),
-                  ts: Number(item.start_time),
-                  uname: item.user_info.uname,
-                  unamejpn,
-                  avatar: item.user_info.face,
-                  price: Number(item.price),
-                  msg: item.message.replace(/\s*/g, '').replace(/[\r\n]/g, ''),
                   msgjpn: item.message_jpn
                     .replace(/\s*/g, '')
-                    .replace(/[\r\n]/g, ''),
-                  msgtr: '',
-                  trstatus: 0,
-                  tr: 0,
-                  bcolor: item.background_bottom_color,
-                  pcolor: item.background_price_color,
-                  exrate: Number(exRate),
-                  hide: 0
+                    .replace(/[\r\n]/g, '')
                 }
               }
             )
@@ -139,7 +123,7 @@ const rdbCore = async (rid) => {
             .toArray()
           if (result.length !== 0) {
             // Replace 2
-            await amdb.updateMany(
+            await amdb.updateOne(
               { _id: Number(item.id) },
               {
                 $set: {
