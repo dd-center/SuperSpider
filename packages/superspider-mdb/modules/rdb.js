@@ -198,9 +198,12 @@ module.exports = async function() {
   rws(emitter)
   try {
     for (const item of await onLive()) {
-      schList[item] = schedule.scheduleJob('*/40 * * * * *', async () => {
-        await rdbCore(item)
-      })
+      schList[Number(item)] = schedule.scheduleJob(
+        '*/40 * * * * *',
+        async () => {
+          await rdbCore(Number(item))
+        }
+      )
     }
   } catch (e) {
     console.log('ERR when fetch onLive')
@@ -212,11 +215,14 @@ module.exports = async function() {
     ).data.exchange_rate
   )
   emitter.on('LIVE', (data) => {
-    schList[data.roomid] = schedule.scheduleJob('*/40 * * * * *', async () => {
-      await rdbCore(data.roomid)
-    })
+    schList[Number(data.roomid)] = schedule.scheduleJob(
+      '*/40 * * * * *',
+      async () => {
+        await rdbCore(Number(data.roomid))
+      }
+    )
   })
   emitter.on('PREPARING', async (data) => {
-    await rdbClose(data.roomid)
+    await rdbClose(Number(data.roomid))
   })
 }
