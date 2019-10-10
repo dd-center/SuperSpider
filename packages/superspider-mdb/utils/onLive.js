@@ -14,6 +14,7 @@ module.exports = async function() {
     if (data.data.list.length <= 0) break
     for (const item of data.data.list) {
       list.push(Number(item.roomid))
+      if (list.length > 19) break
     }
     i++
   }
