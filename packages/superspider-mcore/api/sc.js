@@ -4,6 +4,8 @@
 const Router = require('koa-router')
 const sc = new Router()
 
+const log = process.env.NODE_ENV == 'development' ? console.log : () => {}
+
 // /sc
 sc.post('/', async (ctx, next) => {
   ctx.response.status = 404
@@ -28,11 +30,13 @@ sc.post('/getData', async (ctx, next) => {
     try {
       ctx.response.status = 200
       const roomid = Number(ctx.request.body.roomid)
+      log(`LOG req in rid ${roomid}`)
       const finded = await amdb
         .find({ roomid })
         .sort('ts', -1)
         .limit(100)
         .toArray()
+      log(`LOG amdb complete ${roomid}`)
       const tsList = new Array()
       const rList = []
       for (const item of finded) {
@@ -46,6 +50,7 @@ sc.post('/getData', async (ctx, next) => {
       for (const tl of rList) {
         tl.sort((a, b) => Number(b.ts) - Number(a.ts))
       }
+      log(`LOG local sort ${roomid}`)
       const output = []
       for (const ts of tsList) {
         output.push({
@@ -53,8 +58,11 @@ sc.post('/getData', async (ctx, next) => {
           data: rList[ts]
         })
       }
+      log(`LOG output ${roomid}`)
       ctx.response.body = output
+      log(`LOG next start ${roomid}`)
       await next()
+      log(`LOG next end ${roomid}`)
     } catch (e) {
       ctx.response.status = 500
       ctx.response.body = 'Internal Server Error'
