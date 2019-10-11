@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon index.js --watch .",
+    "dev": "cross-env NODE_ENV=development development=1 nodemon index.js --watch .",
     "start": "cross-env NODE_ENV=production node index.js"
   },
   "author": "Il Harper",
   "license": "MIT",
   "dependencies": {
     "cross-env": "^6.0.0",
+    "nodemon": "^1.19.3",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
     "ws": "^7.1.2"
