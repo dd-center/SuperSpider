@@ -57,7 +57,7 @@
 
 Run using:
 
-`docker run -d -p 2163:2163 -e MONGODB_PASS=PASS -e MONGODB_IP=IP afanyiyu/superspider-ana`
+`docker run -d -p 2163:2163 -v /scdb:/scdb -e MONGODB_PASS=PASS -e MONGODB_IP=IP afanyiyu/superspider-ana`
 
 Internal build using:
 
@@ -77,7 +77,7 @@ Internal build using:
 
 Run using:
 
-`docker run -d -p 2165:2165 -p 2166:2166 -v /scdb:/scdb -e MONGODB_PASS=PASS afanyiyu/superspider-mdb`
+`docker run -d -p 2165:2165 -p 2166:2166 -v /scdb:/scdb -e MONGODB_PASS=PASS -e MONGODB_IP=IP afanyiyu/superspider-mdb`
 
 Internal build using:
 
