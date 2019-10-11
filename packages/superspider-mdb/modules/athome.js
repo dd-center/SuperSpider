@@ -20,7 +20,7 @@ const wss = new WebSocket.Server({ port: 2165 })
 const url = new URL(
   process.env.NODE_ENV == 'development'
     ? 'ws://0.0.0.0:2165'
-    : 'wss://athome.bilisc.com'
+    : 'ws://athome.bilisc.com'
 )
 const metadatas = ['runtime', 'platform', 'version', 'name']
 

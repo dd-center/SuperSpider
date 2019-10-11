@@ -15,6 +15,8 @@ const tsList = {}
 
 let exRate = 14.7
 
+const log = process.env.NODE_ENV == 'development' ? console.log : () => {}
+
 const rdbCore = async (rid) => {
   if (!global.amdb) return
   const amdb = global.amdb
@@ -23,6 +25,7 @@ const rdbCore = async (rid) => {
   if (!tsList[rid]) {
     tsList[rid] = new Date().getTime()
   }
+  log(`LOG start rdb room ${rid}`)
   try {
     let data = false
     if (global.usingAtHome)
@@ -71,6 +74,7 @@ const rdbCore = async (rid) => {
       }
       const hasTr =
         item.message_jpn.replace(/\s*/g, '').replace(/[\r\n]/g, '') !== ''
+      log(`LOG start write id ${item.id} with hastr: ${hasTr}`)
       try {
         if (hasTr) {
           const result = await amdb
@@ -78,8 +82,12 @@ const rdbCore = async (rid) => {
             .limit(1)
             .toArray()
           if (result.length !== 0) {
-            if (Number(result[0].status) > 2) continue
+            if (Number(result[0].status) > 2) {
+              log(`LOG start write id ${item.id} with continue. `)
+              continue
+            }
             // Replace 3
+            log(`LOG start write id ${item.id} with replace 3. `)
             await amdb.updateOne(
               { _id: Number(item.id) },
               {
@@ -93,6 +101,7 @@ const rdbCore = async (rid) => {
             )
           } else {
             // Insert 3
+            log(`LOG start write id ${item.id} with insert 3. `)
             await amdb.insertOne({
               _id: Number(item.id),
               status: 3,
@@ -123,6 +132,7 @@ const rdbCore = async (rid) => {
             .toArray()
           if (result.length !== 0) {
             // Replace 2
+            log(`LOG start write id ${item.id} with replace 2. `)
             await amdb.updateOne(
               { _id: Number(item.id) },
               {
@@ -152,6 +162,7 @@ const rdbCore = async (rid) => {
             )
           } else {
             // Insert 2
+            log(`LOG start write id ${item.id} with insert 2. `)
             await amdb.insertOne({
               _id: Number(item.id),
               status: 2,
@@ -184,7 +195,7 @@ const rdbCore = async (rid) => {
     }
   } catch (e) {
     console.log('ERR when rp room ' + rid)
-    // console.log(e)
+    console.log(e)
   }
 }
 
