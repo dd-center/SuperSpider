@@ -2,6 +2,8 @@ const rp = require('request-promise-native')
 
 const conv = require('../utils/nameConv')
 
+const log = process.env.NODE_ENV == 'development' ? console.log : () => {}
+
 module.exports = async function() {
   if (!global.amdb) return
   const amdb = global.amdb
@@ -19,23 +21,23 @@ module.exports = async function() {
       .toArray()
     if (uf.length > 0 && uf[0].unamejpn && uf[0].unamejpn !== '') {
       data = uf[0].unamejpn
-      console.log('UN: ADD by UTRDB')
+      log('UN: ADD by UTRDB')
     } else {
       data = await conv(item.uname)
-      console.log('UN: ADD by CONV')
+      log('UN: ADD by CONV')
       try {
         await utrdb.insertOne({ uname: item.uname, unamejpn: data })
       } catch (e) {
-        console.log('ERR at UN insert utrdb: ' + data)
-        console.log(e)
+        log('ERR at UN insert utrdb: ' + data)
+        log(e)
       }
     }
-    console.log(`id: ${item._id} / unamejpn: ${data}`)
+    log(`id: ${item._id} / unamejpn: ${data}`)
     try {
       await amdb.updateOne({ _id: item._id }, { $set: { unamejpn: data } })
     } catch (e) {
-      console.log('ERR at id ' + item._id)
-      console.log(e)
+      log('ERR at id ' + item._id)
+      log(e)
     }
   }
 }

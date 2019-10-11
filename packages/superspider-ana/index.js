@@ -4,10 +4,12 @@ const Router = require('koa-router')
 const router = new Router()
 
 const fs = require('fs')
-// const schedule = require('node-schedule')
+const schedule = require('node-schedule')
 const bodyParser = require('koa-bodyparser')
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+// const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+const core = require('./module/core')
 
 const MongoClient = require('mongodb').MongoClient
 
@@ -64,4 +66,6 @@ global.utrdb = false
     console.log(err)
     process.exit(1)
   }
+
+  schedule.scheduleJob('* * * * *', core)
 })()
