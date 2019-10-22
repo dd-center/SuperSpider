@@ -92,6 +92,12 @@ process.on('uncaughtException', (err) => {
     },
     (e, s) => {}
   )
+  global.amdb.createIndex(
+    {
+      ts: -1
+    },
+    (e, s) => {}
+  )
   global.utrdb.createIndex(
     {
       uname: -1

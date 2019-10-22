@@ -202,6 +202,7 @@ const rdbCore = async (rid) => {
 const rdbClose = async (rid) => {
   if (!schList[rid]) return
   schList[rid].cancel()
+  schList[rid] = false
   tsList[rid] = false
 }
 
