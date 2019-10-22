@@ -36,6 +36,7 @@
   "livets": 10000,
   "ts": 10000,
   "uname": "用户名",
+  "unamejpn": "名前",
   "avatar": "https://static.hdslb.com/images/member/noface.gif",
   "price": 30,
   "msg": "",
@@ -48,6 +49,32 @@
   "pcolor": "",
   "exrate": "",
   "hide": 0
+}
+```
+
+## 送礼物/上舰数据格式（PreDB）
+
+`mongodb://172.18.0.1:27017/amdb/predb`
+
+```json with comments
+{
+  "_id": "ObjectId()",
+  "type": 0,
+  // 0: 预留
+  // 1: 总督
+  // 2: 提督
+  // 3: 舰长
+  // 4: 金瓜子礼物
+  "roomid": 1,
+  "livets": 10000,
+  "ts": 10000,
+  "uname": "用户名",
+  "unamejpn": "名前",
+  "avatar": "https://static.hdslb.com/images/member/noface.gif",
+  "price": 30,
+  "exrate": "",
+  "hide": 0,
+  "gift": "辣条"
 }
 ```
 
@@ -82,6 +109,16 @@ Run using:
 Internal build using:
 
 `docker build -t afanyiyu/superspider-mdb github.com/dd-center/SuperSpider#master:packages/superspider-mdb`
+
+### PreDB
+
+Run using:
+
+`docker run -d -p 2165:2165 -p 2166:2166 -e MONGODB_PASS=PASS -e MONGODB_IP=IP afanyiyu/superspider-predb`
+
+Internal build using:
+
+`docker build -t afanyiyu/superspider-predb github.com/dd-center/SuperSpider#master:packages/superspider-predb`
 
 ### Core
 
