@@ -1,0 +1,19 @@
+{
+  "typeAcquisition": {
+    "include": []
+  },
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "checkJs": true,
+    "moduleResolution": "node"
+  },
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*"
+  ],
+  "include": [
+    "packages/**/*"
+  ],
+  "javascript.implicitProjectConfig.checkJs": true
+}
