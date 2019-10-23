@@ -142,7 +142,8 @@ const rdbCore = (rid) => {
                 hide: 0,
                 type: 4,
                 gift: data.data.giftName,
-                uid: data.data.uid
+                uid: data.data.uid,
+                num: Number(data.data.num)
               })
             } catch (e) {
               console.log('ERR when writing data: ')
