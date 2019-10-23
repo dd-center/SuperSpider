@@ -90,7 +90,9 @@ const rdbCore = (rid) => {
                 price: Number(Number(data.data.price) / 1000),
                 exrate: Number(exRate),
                 hide: 0,
-                type: Number(data.data.guard_level)
+                type: Number(data.data.guard_level),
+                uid: data.data.uid,
+                gift: data.data.gift_name
               })
             } catch (e) {
               console.log('ERR when writing data: ')
@@ -139,7 +141,8 @@ const rdbCore = (rid) => {
                 exrate: Number(exRate),
                 hide: 0,
                 type: 4,
-                gift: data.data.giftName
+                gift: data.data.giftName,
+                uid: data.data.uid
               })
             } catch (e) {
               console.log('ERR when writing data: ')
