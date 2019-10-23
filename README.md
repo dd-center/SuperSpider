@@ -74,7 +74,8 @@
   "price": 30,
   "exrate": "",
   "hide": 0,
-  "gift": "辣条"
+  "gift": "辣条",
+  "num": 1
 }
 ```
 
