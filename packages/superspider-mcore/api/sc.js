@@ -57,18 +57,30 @@ sc.post('/getData', async (ctx, next) => {
       for (const item of finded) {
         if (!item.livets) continue
         if (Number(item.hide) > 0) continue
-        const livets = Number(item.livets)
-        if (!tsList.includes(livets)) tsList.push(livets)
-        if (!rList[livets]) rList[livets] = new Array()
-        rList[livets].push(item)
+        let lts = Number(item.livets)
+        for (i = lts; i > lts - 300; i--) {
+          if (tsList.includes(Number(i))) {
+            lts = Number(i)
+            break
+          }
+        }
+        if (!tsList.includes(lts)) tsList.push(lts)
+        if (!rList[lts]) rList[lts] = new Array()
+        rList[lts].push(item)
       }
       for (const item of preFinded) {
         if (!item.livets) continue
         if (Number(item.hide) > 0) continue
-        const livets = Number(item.livets)
-        if (!tsList.includes(livets)) tsList.push(livets)
-        if (!rList[livets]) rList[livets] = new Array()
-        rList[livets].push({ ...item, ...giftConv(item) })
+        let lts = Number(item.livets)
+        for (i = lts; i > lts - 300; i--) {
+          if (tsList.includes(Number(i))) {
+            lts = Number(i)
+            break
+          }
+        }
+        if (!tsList.includes(lts)) tsList.push(lts)
+        if (!rList[lts]) rList[lts] = new Array()
+        rList[lts].push({ ...item, ...giftConv(item) })
       }
       for (const tl of rList) {
         tl.sort((a, b) => Number(b.ts) - Number(a.ts))
@@ -81,6 +93,7 @@ sc.post('/getData', async (ctx, next) => {
           data: rList[ts]
         })
       }
+      output.sort((a, b) => Number(b.ts) - Number(a.ts))
       log(`LOG output ${roomid}`)
       ctx.response.body = output
       log(`LOG next start ${roomid}`)
