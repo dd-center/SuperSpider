@@ -64,6 +64,7 @@ process.on('uncaughtException', (err) => {
     const db = client.db('amdb')
     global.amdb = db.collection('maindb')
     global.udb = db.collection('udb')
+    global.predb = db.collection('predb')
 
     global.udb.createIndex(
       {
@@ -73,7 +74,7 @@ process.on('uncaughtException', (err) => {
       (e, s) => {}
     )
   } catch (err) {
-    console.log('ERR when connect to AMDB/UDB')
+    console.log('ERR when connect to AMDB/UDB/PreDB')
     console.log(err)
     process.exit(1)
   }

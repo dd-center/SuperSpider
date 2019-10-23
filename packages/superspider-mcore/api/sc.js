@@ -4,12 +4,14 @@
 const Router = require('koa-router')
 const sc = new Router()
 
+const giftConv = require('../utils/giftConv')
+
 const log = process.env.NODE_ENV == 'development' ? console.log : () => {}
 
 // /sc
-sc.post('/', async (ctx, next) => {
+sc.get('/', async (ctx, next) => {
   ctx.response.status = 404
-  ctx.response.body = 'Page Not Found'
+  ctx.response.body = 'Simon Not Found'
   await next()
 })
 
@@ -21,7 +23,14 @@ sc.post('/getData', async (ctx, next) => {
     await next()
     return
   }
+  if (!global.predb) {
+    ctx.response.status = 500
+    ctx.response.body = 'Internal Server Error: PreDB ERR'
+    await next()
+    return
+  }
   const amdb = global.amdb
+  const predb = global.predb
   if (!ctx.request.body.roomid || isNaN(Number(ctx.request.body.roomid))) {
     ctx.response.status = 404
     ctx.response.body = 'Bad Request Format'
@@ -37,6 +46,12 @@ sc.post('/getData', async (ctx, next) => {
         .limit(100)
         .toArray()
       log(`LOG amdb complete ${roomid}`)
+      const preFinded = await predb
+        .find({ roomid })
+        .sort('ts', -1)
+        .limit(100)
+        .toArray()
+      log(`LOG predb complete ${roomid}`)
       const tsList = new Array()
       const rList = []
       for (const item of finded) {
@@ -46,6 +61,14 @@ sc.post('/getData', async (ctx, next) => {
         if (!tsList.includes(livets)) tsList.push(livets)
         if (!rList[livets]) rList[livets] = new Array()
         rList[livets].push(item)
+      }
+      for (const item of preFinded) {
+        if (!item.livets) continue
+        if (Number(item.hide) > 0) continue
+        const livets = Number(item.livets)
+        if (!tsList.includes(livets)) tsList.push(livets)
+        if (!rList[livets]) rList[livets] = new Array()
+        rList[livets].push({ ...item, ...giftConv(item) })
       }
       for (const tl of rList) {
         tl.sort((a, b) => Number(b.ts) - Number(a.ts))
