@@ -13,6 +13,11 @@
     "lang": "言語",
     "showTime": "時間表示",
     "showKana": "カタカナ表示",
-    "tutorial": "チュートリアル"
+    "showGift": "ギフトディスプレイ",
+    "tutorial": "チュートリアル",
+    "chat": "弾幕姫",
+    "copySucceed": "コピー成功",
+    "copyFailed": "コピー失敗",
+    "copy": "クリックしてコピー"
   }
 }

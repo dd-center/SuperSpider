@@ -36,7 +36,11 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/element-ui', '~/plugins/i18n.js'],
+  plugins: [
+    '@/plugins/element-ui',
+    '~/plugins/i18n.js',
+    '~/plugins/plugins.js'
+  ],
   /*
    ** Nuxt.js dev-modules
    */

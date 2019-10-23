@@ -13,6 +13,11 @@
     "lang": "语言",
     "showTime": "时间显示",
     "showKana": "片假名显示",
-    "tutorial": "教程"
+    "showGift": "礼物显示",
+    "tutorial": "教程",
+    "chat": "弹幕姬",
+    "copySucceed": "复制成功",
+    "copyFailed": "复制失败",
+    "copy": "单击以复制"
   }
 }

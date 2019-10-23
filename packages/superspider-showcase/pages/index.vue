@@ -6,6 +6,9 @@
 
 <script>
 export default {
+  head: {
+    title: 'BiliSC'
+  },
   mounted() {
     this.$router.push({
       path: '/sc',

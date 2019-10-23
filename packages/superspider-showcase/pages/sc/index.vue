@@ -2,7 +2,18 @@
   <el-container>
     <el-aside width="300px">
       <el-row>
-        <h2 align="center">BiliSC (δ)</h2>
+        <div
+          align-center
+          style="text-align: center; margin: 0 auto; padding: 30px; "
+        >
+          <img
+            src="~/assets/Logo.png"
+            height="150px"
+            width="150px"
+            style="text-align: center; margin: 0 auto; "
+          />
+        </div>
+        <!-- <h2 align="center">BiliSC (δ)</h2> -->
       </el-row>
       <!-- <el-row>
         <el-link
@@ -13,12 +24,7 @@
         >
       </el-row> -->
       <el-row>
-        <el-form
-          ref="form"
-          :model="form"
-          label-width="150px"
-          @submit.native.prevent
-        >
+        <el-form ref="form" label-width="150px" @submit.native.prevent>
           <el-form-item>
             <el-link
               href="https://docs.bilisc.com"
@@ -27,16 +33,27 @@
               >{{ $t('common.tutorial') }}</el-link
             >
           </el-form-item>
+          <el-form-item>
+            <el-link
+              href="http://chat.bilisc.com"
+              target="_blank"
+              type="primary"
+              >{{ $t('common.chat') }}</el-link
+            >
+          </el-form-item>
           <el-form-item :label="$t('common.lang')">
             <LocaleChanger></LocaleChanger>
           </el-form-item>
           <el-form-item :label="$t('common.showTime')">
-            <el-switch v-model="showTime"></el-switch>
+            <el-switch v-model="showTimeNative"></el-switch>
+          </el-form-item>
+          <el-form-item :label="$t('common.showGift')">
+            <el-switch v-model="showGiftNative"></el-switch>
           </el-form-item>
           <el-form-item :label="$t('common.showKana')">
             <el-switch
               v-if="$i18n.locale == 'ja'"
-              v-model="showKana"
+              v-model="showKanaNative"
             ></el-switch>
             <el-switch
               v-if="$i18n.locale !== 'ja'"
@@ -46,7 +63,7 @@
           </el-form-item>
           <el-form-item :label="$t('common.channelid')">
             <el-input
-              v-model="form.room"
+              v-model="room"
               autofocus
               @keyup.enter.native="startFetchData"
             ></el-input>
@@ -62,12 +79,16 @@
         </el-form>
       </el-row>
       <el-row style="margin: 30px;">
+        <el-link
+          style="word-wrap: break-word; word-break: break-all; white-space: pre-wrap; "
+          @click="copyText"
+        >
+          {{ addText }}
+        </el-link>
+        <el-link @click="copyText">{{ $t('common.copy') }}</el-link>
         <p>{{ $t('sc.t1') }}</p>
         <p>{{ $t('sc.t2') }}</p>
         <p>{{ $t('sc.t3') }}</p>
-        <p>
-          http://bilisc.com/?roomid={{ form.room || $t('common.channelid') }}
-        </p>
         <p>
           {{ $t('sc.t4')
           }}<a href="https://faithtown.tech/" target="_blank">Il Harper</a
@@ -86,7 +107,7 @@
       <el-row>
         <div align="center">
           <div v-for="liveItem in scData" :key="liveItem.ts">
-            <h2 v-if="showTime">
+            <h2 v-if="showTimeNative">
               {{ new Date(liveItem.ts).toLocaleString() + $t('sc.livets') }}
             </h2>
             <div
@@ -105,9 +126,13 @@
                 "
             -->
               <Superchat
-                v-if="Number(item.hide) == 0"
+                v-if="
+                  Number(item.hide) == 0 &&
+                    (Number(item.sc) == 1 ||
+                      (Number(item.sc) == 0 && showGiftNative))
+                "
                 :title="
-                  $i18n.locale !== 'ja' || !showKana
+                  $i18n.locale !== 'ja' || !showKanaNative
                     ? item.uname
                     : item.unamejpn && item.unamejpn !== ''
                     ? item.unamejpn
@@ -153,43 +178,90 @@ export default {
   data() {
     return {
       scData: [],
-      form: {
-        room: ''
-      },
+      room: '',
       started: false,
       interval: false,
-      showTime: this.$route.query.showTime || true,
-      showKana: this.$route.query.showKana || true
+      showTimeNative: true,
+      showKanaNative: true,
+      showGiftNative: true,
+      addText: ''
+    }
+  },
+  computed: {
+    showTime() {
+      return this.showTimeNative || (this.$route.query.showTime || true)
+    },
+    showKana() {
+      return this.showKanaNative || (this.$route.query.showKana || true)
+    },
+    showGift() {
+      return this.showGiftNative || (this.$route.query.showGift || true)
+    },
+    lang() {
+      return this.$i18n.locale || (this.$route.query.lang || 'ja')
+    }
+  },
+  watch: {
+    showTimeNative() {
+      this.fetchAdd()
+    },
+    showKanaNative() {
+      this.fetchAdd()
+    },
+    showGiftNative() {
+      this.fetchAdd()
+    },
+    room() {
+      this.fetchAdd()
     }
   },
   async mounted() {
     if (this.$route.query.roomid) {
-      this.form.room = this.$route.query.roomid
-      await this.startFetchData()
+      this.room = this.$route.query.roomid
+      if (this.room && this.room !== '') await this.startFetchData()
     }
   },
   methods: {
+    fetchAdd() {
+      this.addText =
+        'https://bilisc.com/?roomid=' +
+        (this.room || this.$t('common.channelid')) +
+        '&showTime=' +
+        this.showTimeNative +
+        '&showKana=' +
+        this.showKanaNative +
+        '&showGift=' +
+        this.showGiftNative +
+        '&lang=' +
+        this.$route.query.lang
+    },
+    copyText() {
+      this.$copyText(this.addText).then(
+        () => {
+          this.$message(this.$t('common.copySucceed'))
+        },
+        () => {
+          this.$message(this.$t('common.copyFailed'))
+        }
+      )
+    },
     async startFetchData() {
+      if (!this.room) return
       await this.fetchData()
-      if (this.started === this.form.room) return
+      if (this.started === this.room) return
       if (this.interval) clearInterval(this.interval)
       this.interval = setInterval(async () => {
         await this.fetchData()
       }, 8000)
-      this.started = this.form.room
+      this.started = this.room
     },
     async fetchData() {
-      if (
-        !this.form.room ||
-        isNaN(Number(this.form.room)) ||
-        this.form.room === ''
-      )
-        return
+      if (!this.room || isNaN(Number(this.room)) || this.room === '') return
       let err = false
       const scData = await this.$axios({
         url: 'https://api.bilisc.com/sc/getData',
         method: 'POST',
-        data: 'roomid=' + this.form.room,
+        data: 'roomid=' + this.room,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }

@@ -30,7 +30,18 @@
     </el-main>
     <el-aside width="600px" style="margin-right: 80px;">
       <el-row>
-        <h2 align="center">BiliSC/Dash (δ)</h2>
+        <div
+          align-center
+          style="text-align: center; margin: 0 auto; padding: 30px; "
+        >
+          <img
+            src="~/assets/Logo.png"
+            height="150px"
+            width="150px"
+            style="text-align: center; margin: 0 auto; "
+          />
+        </div>
+        <!-- <h2 align="center">BiliSC/Dash (δ)</h2> -->
       </el-row>
       <!-- <el-row>
         <LocaleChanger></LocaleChanger>
