@@ -66,7 +66,7 @@ sc.post('/getData', async (ctx, next) => {
         }
         if (!tsList.includes(lts)) tsList.push(lts)
         if (!rList[lts]) rList[lts] = new Array()
-        rList[lts].push(item)
+        rList[lts].push({ ...item, sc: 1 })
       }
       for (const item of preFinded) {
         if (!item.livets) continue
@@ -80,7 +80,7 @@ sc.post('/getData', async (ctx, next) => {
         }
         if (!tsList.includes(lts)) tsList.push(lts)
         if (!rList[lts]) rList[lts] = new Array()
-        rList[lts].push({ ...item, ...giftConv(item) })
+        rList[lts].push({ ...item, ...giftConv(item), sc: 0 })
       }
       for (const tl of rList) {
         tl.sort((a, b) => Number(b.ts) - Number(a.ts))
