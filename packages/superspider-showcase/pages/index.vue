@@ -13,9 +13,9 @@ export default {
     this.$router.push({
       path: '/sc',
       query: {
-        ...this.$route.query,
-        roomid: this.$route.query.roomid || '',
-        lang: this.$route.query.lang || 'ja'
+        ...this.$route.query
+        // roomid: this.$route.query.roomid || '',
+        // lang: this.$route.query.lang || 'ja'
       }
     })
   }

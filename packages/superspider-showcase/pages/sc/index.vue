@@ -48,7 +48,7 @@
             <el-switch v-model="showTimeNative"></el-switch>
           </el-form-item>
           <el-form-item :label="$t('common.showGift')">
-            <el-switch v-model="showGiftNative"></el-switch>
+            <el-switch v-model="showGiftNative" :value="false"></el-switch>
           </el-form-item>
           <el-form-item :label="$t('common.showKana')">
             <el-switch
@@ -183,19 +183,25 @@ export default {
       interval: false,
       showTimeNative: true,
       showKanaNative: true,
-      showGiftNative: true,
+      showGiftNative: false,
       addText: ''
     }
   },
   computed: {
     showTime() {
-      return this.showTimeNative || (this.$route.query.showTime || true)
+      return this.$route.query.showTime
+        ? this.$route.query.showTime === 'true'
+        : true
     },
     showKana() {
-      return this.showKanaNative || (this.$route.query.showKana || true)
+      return this.$route.query.showKana
+        ? this.$route.query.showKana === 'true'
+        : true
     },
     showGift() {
-      return this.showGiftNative || (this.$route.query.showGift || true)
+      return this.$route.query.showGift
+        ? this.$route.query.showGift === 'true'
+        : false
     },
     lang() {
       return this.$i18n.locale || (this.$route.query.lang || 'ja')
@@ -213,13 +219,20 @@ export default {
     },
     room() {
       this.fetchAdd()
+    },
+    $i18n() {
+      this.fetchAdd()
     }
   },
   async mounted() {
+    this.showTimeNative = this.showTime
+    this.showKanaNative = this.showKana
+    this.showGiftNative = this.showGift
     if (this.$route.query.roomid) {
       this.room = this.$route.query.roomid
       if (this.room && this.room !== '') await this.startFetchData()
     }
+    this.fetchAdd()
   },
   methods: {
     fetchAdd() {
@@ -233,7 +246,7 @@ export default {
         '&showGift=' +
         this.showGiftNative +
         '&lang=' +
-        this.$route.query.lang
+        this.$i18n.locale
     },
     copyText() {
       this.$copyText(this.addText).then(
