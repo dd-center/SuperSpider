@@ -186,7 +186,7 @@ export default {
       interval: false,
       showTimeNative: true,
       showKanaNative: true,
-      showGiftNative: false,
+      showGiftNative: true,
       giftFilterNative: true,
       addText: ''
     }
@@ -205,7 +205,7 @@ export default {
     showGift() {
       return this.$route.query.showGift
         ? this.$route.query.showGift === 'true'
-        : false
+        : true
     },
     giftFilter() {
       return this.$route.query.giftFilter
