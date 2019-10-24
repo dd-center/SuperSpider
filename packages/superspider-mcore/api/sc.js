@@ -69,6 +69,11 @@ sc.post('/getData', async (ctx, next) => {
         rList[lts].push({ ...item, sc: 1 })
       }
       for (const item of preFinded) {
+        if (
+          ctx.request.body.filter &&
+          (!isNaN(Number(item.price)) || Number(item.price) < 30)
+        )
+          continue
         if (!item.livets) continue
         if (Number(item.hide) > 0) continue
         let lts = Number(item.livets)

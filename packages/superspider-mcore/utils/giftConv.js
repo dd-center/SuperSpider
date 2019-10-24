@@ -78,7 +78,7 @@ const typeData = [
     value: 4,
     data: {
       msg: '{0}在本房间送出了{1}！',
-      msgjpn: '{0}がこのチャンネルで{1}を送信しました！'
+      msgjpn: '{1}を送信しました！'
     }
   }
 ]
@@ -99,7 +99,7 @@ module.exports = function(data) {
     if (Number(data.type) == i.value) {
       type = {
         msg: i.data.msg.format(data.uname, gift),
-        msgjpn: i.data.msgjpn.format(data.unamejpn, gift)
+        msgjpn: i.data.msgjpn.format(data.uname, gift)
       }
       break
     }

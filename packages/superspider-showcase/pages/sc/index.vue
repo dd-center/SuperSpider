@@ -48,7 +48,10 @@
             <el-switch v-model="showTimeNative"></el-switch>
           </el-form-item>
           <el-form-item :label="$t('common.showGift')">
-            <el-switch v-model="showGiftNative" :value="false"></el-switch>
+            <el-switch v-model="showGiftNative"></el-switch>
+          </el-form-item>
+          <el-form-item :label="$t('common.giftFilter')">
+            <el-switch v-model="giftFilterNative"></el-switch>
           </el-form-item>
           <el-form-item :label="$t('common.showKana')">
             <el-switch
@@ -184,6 +187,7 @@ export default {
       showTimeNative: true,
       showKanaNative: true,
       showGiftNative: false,
+      giftFilterNative: true,
       addText: ''
     }
   },
@@ -191,7 +195,7 @@ export default {
     showTime() {
       return this.$route.query.showTime
         ? this.$route.query.showTime === 'true'
-        : true
+        : true // This controls the default value
     },
     showKana() {
       return this.$route.query.showKana
@@ -202,6 +206,11 @@ export default {
       return this.$route.query.showGift
         ? this.$route.query.showGift === 'true'
         : false
+    },
+    giftFilter() {
+      return this.$route.query.giftFilter
+        ? this.$route.query.giftFilter === 'true'
+        : true
     },
     lang() {
       return this.$i18n.locale || (this.$route.query.lang || 'ja')
@@ -217,6 +226,9 @@ export default {
     showGiftNative() {
       this.fetchAdd()
     },
+    giftFilterNative() {
+      this.fetchAdd()
+    },
     room() {
       this.fetchAdd()
     },
@@ -228,6 +240,7 @@ export default {
     this.showTimeNative = this.showTime
     this.showKanaNative = this.showKana
     this.showGiftNative = this.showGift
+    this.giftFilterNative = this.giftFilter
     if (this.$route.query.roomid) {
       this.room = this.$route.query.roomid
       if (this.room && this.room !== '') await this.startFetchData()
@@ -245,6 +258,8 @@ export default {
         this.showKanaNative +
         '&showGift=' +
         this.showGiftNative +
+        '&giftFilter=' +
+        this.giftFilterNative +
         '&lang=' +
         this.$i18n.locale
     },
@@ -274,7 +289,8 @@ export default {
       const scData = await this.$axios({
         url: 'https://api.bilisc.com/sc/getData',
         method: 'POST',
-        data: 'roomid=' + this.room,
+        data:
+          'roomid=' + this.room + (this.giftFilterNative ? '&filter=on' : ''),
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }

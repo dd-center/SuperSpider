@@ -11,6 +11,7 @@
               style="margin: 20px;"
             >
               <Superchat
+                v-if="Number(item.sc) == 1"
                 :title="item._id + (item.hide > 0 ? '（隐藏）' : '')"
                 :price="Number(item.price)"
                 :message="item.msg"
