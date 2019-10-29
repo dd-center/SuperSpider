@@ -12,6 +12,9 @@
             width="150px"
             style="text-align: center; margin: 0 auto; "
           />
+          <p style="color: #606266; font-size: 14px;">
+            v1.0.1
+          </p>
         </div>
         <!-- <h2 align="center">BiliSC (δ)</h2> -->
       </el-row>
@@ -113,6 +116,12 @@
             <h2 v-if="showTimeNative">
               {{ new Date(liveItem.ts).toLocaleString() + $t('sc.livets') }}
             </h2>
+            <p
+              v-if="!showTimeNative && liveItem.history"
+              style="color: #606266; font-size: 14px;"
+            >
+              {{ $t('sc.history') }}
+            </p>
             <div
               v-for="item in liveItem.data"
               :key="item._id"
@@ -195,7 +204,7 @@ export default {
     showTime() {
       return this.$route.query.showTime
         ? this.$route.query.showTime === 'true'
-        : true // This controls the default value
+        : false // This controls the default value
     },
     showKana() {
       return this.$route.query.showKana
@@ -298,7 +307,14 @@ export default {
         err = true
       })
       if (err) return
-      this.scData = scData.data
+      // this.scData = scData.data
+      this.scData = []
+      let his = 0
+      for (const item of scData.data) {
+        his++
+        if (his === 2) this.scData.push({ ...item, history: true })
+        else this.scData.push(item)
+      }
     }
   }
 }
