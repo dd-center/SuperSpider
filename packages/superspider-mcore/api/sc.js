@@ -66,18 +66,18 @@ sc.post('/getData', async (ctx, next) => {
         }
         if (!tsList.includes(lts)) tsList.push(lts)
         if (!rList[lts]) rList[lts] = new Array()
-        rList[lts].push({ ...item, sc: 1 })
+        rList[lts].push({ ...item, ts: Number(item.ts * 1000), sc: 1 })
       }
       for (const item of preFinded) {
         if (
           ctx.request.body.filter &&
-          (!isNaN(Number(item.price)) || Number(item.price) < 30)
+          (isNaN(Number(item.price)) || Number(item.price) < 30)
         )
           continue
         if (!item.livets) continue
         if (Number(item.hide) > 0) continue
         let lts = Number(item.livets)
-        for (i = lts; i > lts - 300; i--) {
+        for (i = lts; i > lts - 300000000; i--) {
           if (tsList.includes(Number(i))) {
             lts = Number(i)
             break
@@ -93,6 +93,7 @@ sc.post('/getData', async (ctx, next) => {
       log(`LOG local sort ${roomid}`)
       const output = []
       for (const ts of tsList) {
+        rList[ts].sort((a, b) => Number(b.ts) - Number(a.ts))
         output.push({
           ts,
           data: rList[ts]
