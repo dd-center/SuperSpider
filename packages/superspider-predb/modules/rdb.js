@@ -2,6 +2,8 @@
 const rp = require('request-promise-native')
 // const schedule = require('node-schedule')
 
+const ObjectId = require('mongodb').ObjectId
+
 const rws = require('../utils/rws')
 // const athome = require('./athome')
 const LiveWS = require('bilibili-live-ws')
@@ -13,6 +15,7 @@ const emitter = new events.EventEmitter()
 
 const schList = {}
 const tsList = {}
+const preList = {}
 
 let exRate = 14.7
 
@@ -80,20 +83,49 @@ const rdbCore = (rid) => {
                 )
                 console.log(e)
               }
-              await predb.insertOne({
-                roomid: Number(rid),
-                livets: Number(tsList[rid]),
-                ts: Number(new Date().getTime()),
-                uname,
-                unamejpn,
-                avatar,
-                price: Number(Number(data.data.price) / 1000),
-                exrate: Number(exRate),
-                hide: 0,
-                type: Number(data.data.guard_level),
-                uid: data.data.uid,
-                gift: data.data.gift_name
-              })
+              if (
+                preList[rid] &&
+                preList[rid].key == data.data.uid + '/' + data.data.gift_name
+              ) {
+                // Add Num
+                if (preList[rid].id) {
+                  await predb.updateOne(
+                    { _id: ObjectId(preList[rid].id) },
+                    {
+                      $set: {
+                        num: Number(
+                          Number(preList[rid].num) + Number(data.data.num)
+                        ),
+                        price: Number(
+                          Number(preList[rid].price) +
+                            Number(Number(data.data.price) / 1000)
+                        )
+                      }
+                    }
+                  )
+                }
+              } else {
+                preList[rid] = {
+                  id: await predb.insertOne({
+                    roomid: Number(rid),
+                    livets: Number(tsList[rid]),
+                    ts: Number(new Date().getTime()),
+                    uname,
+                    unamejpn,
+                    avatar,
+                    price: Number(Number(data.data.price) / 1000),
+                    exrate: Number(exRate),
+                    hide: 0,
+                    type: Number(data.data.guard_level),
+                    uid: Number(data.data.uid),
+                    num: Number(data.data.num),
+                    gift: data.data.gift_name
+                  }).insertedId,
+                  num: Number(data.data.num),
+                  key: data.data.uid + '/' + data.data.gift_name,
+                  price: Number(Number(data.data.price) / 1000)
+                }
+              }
             } catch (e) {
               console.log('ERR when writing data: ')
               console.log(data)
@@ -130,21 +162,49 @@ const rdbCore = (rid) => {
               }
             }
             try {
-              await predb.insertOne({
-                roomid: Number(rid),
-                livets: Number(tsList[rid]),
-                ts: Number(new Date().getTime()),
-                uname,
-                unamejpn,
-                avatar: data.data.face,
-                price: Number(Number(data.data.price) / 1000),
-                exrate: Number(exRate),
-                hide: 0,
-                type: 4,
-                gift: data.data.giftName,
-                uid: data.data.uid,
-                num: Number(data.data.num)
-              })
+              if (
+                preList[rid] &&
+                preList[rid].key == data.data.uid + '/' + data.data.giftName
+              ) {
+                // Add Num
+                if (preList[rid].id) {
+                  await predb.updateOne(
+                    { _id: ObjectId(preList[rid].id) },
+                    {
+                      $set: {
+                        num: Number(
+                          Number(preList[rid].num) + Number(data.data.num)
+                        ),
+                        price: Number(
+                          Number(preList[rid].price) +
+                            Number(Number(data.data.price) / 1000)
+                        )
+                      }
+                    }
+                  )
+                }
+              } else {
+                preList[rid] = {
+                  id: (await predb.insertOne({
+                    roomid: Number(rid),
+                    livets: Number(tsList[rid]),
+                    ts: Number(new Date().getTime()),
+                    uname,
+                    unamejpn,
+                    avatar: data.data.face,
+                    price: Number(Number(data.data.price) / 1000),
+                    exrate: Number(exRate),
+                    hide: 0,
+                    type: 4,
+                    gift: data.data.giftName,
+                    uid: Number(data.data.uid),
+                    num: Number(data.data.num)
+                  })).insertedId,
+                  num: Number(data.data.num),
+                  key: data.data.uid + '/' + data.data.giftName,
+                  price: Number(Number(data.data.price) / 1000)
+                }
+              }
             } catch (e) {
               console.log('ERR when writing data: ')
               console.log(data)
@@ -168,12 +228,19 @@ const rdbClose = async (rid) => {
   schList[rid].close()
   schList[rid] = false
   tsList[rid] = false
+  preList[rid] = false
 }
 
 module.exports = async function() {
   rws(emitter)
   try {
     for (const item of await onLive()) {
+      try {
+        if (schList[Number(item)]) {
+          schList[Number(item)].close()
+          schList[Number(item)] = false
+        }
+      } catch (e) {}
       schList[Number(item)] = rdbCore(Number(item))
     }
   } catch (e) {
@@ -186,6 +253,12 @@ module.exports = async function() {
     ).data.exchange_rate
   )
   emitter.on('LIVE', (data) => {
+    try {
+      if (schList[Number(data.roomid)]) {
+        schList[Number(data.roomid)].close()
+        schList[Number(data.roomid)] = false
+      }
+    } catch (e) {}
     schList[Number(data.roomid)] = rdbCore(Number(data.roomid))
   })
   emitter.on('PREPARING', async (data) => {
