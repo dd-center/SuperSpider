@@ -13,7 +13,7 @@
             style="text-align: center; margin: 0 auto; "
           />
           <p style="color: #606266; font-size: 14px;">
-            v1.0.1
+            v1.0.2
           </p>
         </div>
         <!-- <h2 align="center">BiliSC (δ)</h2> -->
@@ -307,7 +307,12 @@ export default {
         err = true
       })
       if (err) return
+      this.$nuxt.$loading.start()
       // this.scData = scData.data
+      for (const item of scData.data) {
+        item.data.sort((a, b) => Number(b.ts) - Number(a.ts))
+      }
+      scData.data.sort((a, b) => Number(b.ts) - Number(a.ts))
       this.scData = []
       let his = 0
       for (const item of scData.data) {
@@ -315,6 +320,7 @@ export default {
         if (his === 2) this.scData.push({ ...item, history: true })
         else this.scData.push(item)
       }
+      this.$nuxt.$loading.finish()
     }
   }
 }

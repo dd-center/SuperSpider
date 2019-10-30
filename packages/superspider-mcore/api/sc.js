@@ -87,19 +87,19 @@ sc.post('/getData', async (ctx, next) => {
         if (!rList[lts]) rList[lts] = new Array()
         rList[lts].push({ ...item, ...giftConv(item), sc: 0 })
       }
-      for (const tl of rList) {
-        tl.sort((a, b) => Number(b.ts) - Number(a.ts))
-      }
+      // for (const tl of rList) {
+      //   tl.sort((a, b) => Number(b.ts) - Number(a.ts))
+      // }
       log(`LOG local sort ${roomid}`)
       const output = []
       for (const ts of tsList) {
-        rList[ts].sort((a, b) => Number(b.ts) - Number(a.ts))
+        // rList[ts].sort((a, b) => Number(b.ts) - Number(a.ts))
         output.push({
           ts,
           data: rList[ts]
         })
       }
-      output.sort((a, b) => Number(b.ts) - Number(a.ts))
+      // output.sort((a, b) => Number(b.ts) - Number(a.ts))
       log(`LOG output ${roomid}`)
       ctx.response.body = output
       log(`LOG next start ${roomid}`)
