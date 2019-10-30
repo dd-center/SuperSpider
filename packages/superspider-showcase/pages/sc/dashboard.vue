@@ -173,7 +173,7 @@ export default {
       const scData = await this.$axios({
         url: 'https://api.bilisc.com/sc/getData',
         method: 'POST',
-        data: 'roomid=' + this.form.room,
+        data: 'roomid=' + this.form.room + '&filter=on',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
