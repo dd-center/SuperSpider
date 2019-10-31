@@ -142,9 +142,12 @@ export default {
         tr: ''
       },
       started: false,
-      interval: false,
+      timer: false,
       status: ''
     }
+  },
+  beforeDestroy() {
+    if (this.timer) clearTimeout(this.timer)
   },
   async mounted() {
     if (this.$route.query.roomid) {
@@ -156,11 +159,17 @@ export default {
     async startFetchData() {
       await this.fetchData()
       if (this.started === this.form.room) return
-      if (this.interval) clearInterval(this.interval)
-      this.interval = setInterval(async () => {
+      if (this.timer) clearTimeout(this.timer)
+      this.timer = this.setTimeoutLoop(async () => {
         await this.fetchData()
       }, 8000)
       this.started = this.form.room
+    },
+    setTimeoutLoop(call, time) {
+      this.timer = setTimeout(async function fn() {
+        await call()
+        this.timer = setTimeout(fn, time)
+      }, time)
     },
     async fetchData() {
       if (

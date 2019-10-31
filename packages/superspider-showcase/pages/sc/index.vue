@@ -192,7 +192,7 @@ export default {
       scData: [],
       room: '',
       started: false,
-      interval: false,
+      timer: false,
       showTimeNative: true,
       showKanaNative: true,
       showGiftNative: true,
@@ -282,15 +282,24 @@ export default {
         }
       )
     },
+    beforeDestroy() {
+      if (this.timer) clearTimeout(this.timer)
+    },
     async startFetchData() {
       if (!this.room) return
       await this.fetchData()
       if (this.started === this.room) return
-      if (this.interval) clearInterval(this.interval)
-      this.interval = setInterval(async () => {
+      if (this.timer) clearTimeout(this.timer)
+      this.timer = this.setTimeoutLoop(async () => {
         await this.fetchData()
       }, 8000)
       this.started = this.room
+    },
+    setTimeoutLoop(call, time) {
+      this.timer = setTimeout(async function fn() {
+        await call()
+        this.timer = setTimeout(fn, time)
+      }, time)
     },
     async fetchData() {
       if (!this.room || isNaN(Number(this.room)) || this.room === '') return
