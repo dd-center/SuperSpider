@@ -77,12 +77,23 @@ sc.post('/getData', async (ctx, next) => {
         if (!item.livets) continue
         if (Number(item.hide) > 0) continue
         let lts = Number(item.livets)
-        for (i = lts; i > lts - 300000000; i--) {
-          if (tsList.includes(Number(i))) {
-            lts = Number(i)
-            break
-          }
+        /// lts是本次直播开始的时间
+        /// 现在需要将时间间隔在300000000ms内的两场直播合并
+        /// 并找出那次直播的时间（livets），赋值给lts
+        // for (i = lts; i > lts - 300000000; i--) {
+        //   if (tsList.includes(Number(i))) {
+        //     lts = Number(i)
+        //     break
+        //   }
+        // }
+        /// 以上为Il Harper@绝赞自裁中的……算了丢人
+        /// 以下为群中的大佬写的示例
+        let newlts = lts - 300000001
+        for (let num of tsList) {
+          newlts = newlts < num && num <= lts ? num : newlts
         }
+        if (newlts !== lts - 300000001) lts = newlts
+        /// END
         if (!tsList.includes(lts)) tsList.push(lts)
         if (!rList[lts]) rList[lts] = new Array()
         rList[lts].push({ ...item, ...giftConv(item), sc: 0 })
