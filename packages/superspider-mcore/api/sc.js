@@ -88,11 +88,11 @@ sc.post('/getData', async (ctx, next) => {
         // }
         /// 以上为Il Harper@绝赞自裁中的……算了丢人
         /// 以下为群中的大佬写的示例
-        let newlts = lts - 300000001
+        let newlts = lts - 3600000
         for (let num of tsList) {
           newlts = newlts < num && num <= lts ? num : newlts
         }
-        if (newlts !== lts - 300000001) lts = newlts
+        if (newlts !== lts - 3600000) lts = newlts
         /// END
         if (!tsList.includes(lts)) tsList.push(lts)
         if (!rList[lts]) rList[lts] = new Array()
