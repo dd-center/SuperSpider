@@ -43,13 +43,13 @@ sc.post('/getData', async (ctx, next) => {
       const finded = await amdb
         .find({ roomid })
         .sort('ts', -1)
-        .limit(50)
+        .limit(100)
         .toArray()
       log(`LOG amdb complete ${roomid}`)
       const preFinded = await predb
         .find({ roomid })
         .sort('ts', -1)
-        .limit(30)
+        .limit(100)
         .toArray()
       log(`LOG predb complete ${roomid}`)
       const tsList = new Array()
@@ -58,12 +58,17 @@ sc.post('/getData', async (ctx, next) => {
         if (!item.livets) continue
         if (Number(item.hide) > 0) continue
         let lts = Number(item.livets)
-        for (i = lts; i > lts - 300; i--) {
-          if (tsList.includes(Number(i))) {
-            lts = Number(i)
-            break
-          }
+        // for (i = lts; i > lts - 300; i--) {
+        //   if (tsList.includes(Number(i))) {
+        //     lts = Number(i)
+        //     break
+        //   }
+        // }
+        let newlts = lts - 3600001
+        for (let num of tsList) {
+          newlts = newlts < num && num <= lts ? num : newlts
         }
+        if (newlts !== lts - 3600001) lts = newlts
         if (!tsList.includes(lts)) tsList.push(lts)
         if (!rList[lts]) rList[lts] = new Array()
         rList[lts].push({ ...item, ts: Number(item.ts * 1000), sc: 1 })
@@ -88,11 +93,11 @@ sc.post('/getData', async (ctx, next) => {
         // }
         /// 以上为Il Harper@绝赞自裁中的……算了丢人
         /// 以下为群中的大佬写的示例
-        let newlts = lts - 3600000
+        let newlts = lts - 3600001
         for (let num of tsList) {
           newlts = newlts < num && num <= lts ? num : newlts
         }
-        if (newlts !== lts - 3600000) lts = newlts
+        if (newlts !== lts - 3600001) lts = newlts
         /// END
         if (!tsList.includes(lts)) tsList.push(lts)
         if (!rList[lts]) rList[lts] = new Array()
