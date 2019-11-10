@@ -1,11 +1,12 @@
 const rp = require('request-promise-native')
 const fs = require('fs')
 
+const { amdbP } = require('../utils/db')
+
 const log = process.env.NODE_ENV == 'development' ? console.log : () => {}
 
 module.exports = async function() {
-  if (!global.amdb) return
-  const amdb = global.amdb
+  const amdb = await amdbP
 
   const lim = await fs.promises.readFile('/scdb/trlimit')
 

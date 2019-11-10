@@ -11,15 +11,10 @@ const bodyParser = require('koa-bodyparser')
 
 const core = require('./module/core')
 
-const MongoClient = require('mongodb').MongoClient
-
 process.on('uncaughtException', (err) => {
   console.log('ERR unc expt')
   console.log(err)
 })
-
-global.amdb = false
-global.utrdb = false
 
 // schedule.scheduleJob('*/5 * * * *', adb)
 ;(async () => {
@@ -44,28 +39,6 @@ global.utrdb = false
   app.use(router.routes())
 
   app.listen(2163)
-
-  // DB Init
-
-  const client = new MongoClient(
-    'mongodb://admin:' +
-      process.env.MONGODB_PASS +
-      '@' +
-      process.env.MONGODB_IP +
-      ':27017/admin?authMechanism=DEFAULT',
-    { useNewUrlParser: true }
-  )
-
-  try {
-    await client.connect()
-
-    global.amdb = client.db('amdb').collection('maindb')
-    global.utrdb = client.db('amdb').collection('utrdb')
-  } catch (err) {
-    console.log('ERR when connect to AMDB')
-    console.log(err)
-    process.exit(1)
-  }
 
   schedule.scheduleJob('* * * * *', core)
 })()
