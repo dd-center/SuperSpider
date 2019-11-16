@@ -3,101 +3,93 @@ const socket = io('https://api.vtbs.moe')
 
 // const events = require('events')
 let dispatch = undefined
+// const Server = require('socket.io')
 
-const LiveWS = require('bilibili-live-ws')
+const { LiveTCP } = require('bilibili-live-ws')
 // const no = require('./env')
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-let rooms = {}
-let roomMid = {}
+const rooms = {}
+const roomMid = {}
 
 const openRoom = ({ roomid }) =>
   new Promise((resolve) => {
     // console.log(`OPEN: ${roomid}`)
-    let ws = new LiveWS(roomid)
-    rooms[roomid] = ws
+    const live = new LiveTCP(roomid)
+    rooms[roomid] = live
     let lastHeartbeat = 0
-    let autorestart = setTimeout(() => {
+    const autorestart = setTimeout(() => {
       // console.log(`AUTORESTART: ${roomid}`)
-      ws.close()
-      resolve({ roomid })
+      live.close()
     }, 1000 * 60 * 60 * 18)
     let timeout = setTimeout(() => {
       if (new Date().getTime() - lastHeartbeat > 1000 * 30) {
         // console.log(`TIMEOUT: ${roomid}`)
-        ws.close()
-        clearTimeout(autorestart)
-        clearTimeout(timeout)
-        resolve({ roomid })
+        live.close()
       }
     }, 1000 * 45)
-    ws.once('live', () => {
+    live.once('live', () => {
       // console.log(`READY: ${roomid}`)
     })
-    ws.on('LIVE', () => dispatch.emit('LIVE', { roomid, mid: roomMid[roomid] }))
-    ws.on('PREPARING', () =>
+    live.on('LIVE', () =>
+      dispatch.emit('LIVE', { roomid, mid: roomMid[roomid] })
+    )
+    live.on('PREPARING', () =>
       dispatch.emit('PREPARING', { roomid, mid: roomMid[roomid] })
     )
-    ws.on('ROUND', () =>
+    live.on('ROUND', () =>
       dispatch.emit('ROUND', { roomid, mid: roomMid[roomid] })
     )
-    ws.on('heartbeat', (online) =>
+    live.on('heartbeat', (online) =>
       dispatch.emit('online', { roomid, mid: roomMid[roomid], online })
     )
-    ws.on('ROOM_CHANGE', ({ data: { title } }) =>
+    live.on('ROOM_CHANGE', ({ data: { title } }) =>
       dispatch.emit('title', { roomid, mid: roomMid[roomid], title })
     )
-    ws.on('DANMU_MSG', async ({ info }) => {
+    live.on('DANMU_MSG', async ({ info }) => {
       if (!info[0][9]) {
-        let message = info[1]
-        let mid = info[2][0]
-        let uname = info[2][1]
+        const message = info[1]
+        const mid = info[2][0]
+        const uname = info[2][1]
         dispatch.emit('danmaku', { message, roomid, mid, uname })
       }
     })
-    ws.on('SEND_GIFT', (payload) => {
-      let coinType = payload.data.coin_type
-      let mid = payload.data.uid
-      let giftId = payload.data.giftId
-      let totalCoin = payload.data.total_coin
-      let uname = payload.data.uname
+    live.on('SEND_GIFT', (payload) => {
+      const coinType = payload.data.coin_type
+      const mid = payload.data.uid
+      const giftId = payload.data.giftId
+      const totalCoin = payload.data.total_coin
+      const uname = payload.data.uname
       dispatch.emit('gift', { roomid, mid, giftId, totalCoin, coinType, uname })
     })
-    ws.on('GUARD_BUY', (payload) => {
-      let mid = payload.data.uid
-      let uname = payload.data.username
-      let num = payload.data.num
-      let price = payload.data.price
-      let giftId = payload.data.gift_id
-      let level = payload.data.guard_level
+    live.on('GUARD_BUY', (payload) => {
+      const mid = payload.data.uid
+      const uname = payload.data.username
+      const num = payload.data.num
+      const price = payload.data.price
+      const giftId = payload.data.gift_id
+      const level = payload.data.guard_level
       dispatch.emit('guard', { roomid, mid, uname, num, price, giftId, level })
     })
 
-    ws.on('heartbeat', () => {
+    live.on('heartbeat', () => {
       lastHeartbeat = new Date().getTime()
       timeout = setTimeout(() => {
         if (new Date().getTime() - lastHeartbeat > 1000 * 30) {
           // console.log(`TIMEOUT: ${roomid}`)
-          ws.close()
-          clearTimeout(autorestart)
-          clearTimeout(timeout)
-          resolve({ roomid })
+          live.close()
         }
       }, 1000 * 45)
     })
-    ws.on('close', () => {
+    live.on('close', () => {
       // console.log(`CLOSE: ${roomid}`)
       clearTimeout(autorestart)
       clearTimeout(timeout)
       resolve({ roomid })
     })
-    ws.on('error', () => {
+    live.on('error', () => {
       // console.log(`ERROR: ${roomid}`)
-      ws.close()
-      clearTimeout(autorestart)
-      clearTimeout(timeout)
-      resolve({ roomid })
     })
   })
 
