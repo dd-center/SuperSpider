@@ -61,7 +61,20 @@ const openRoom = ({ roomid }) =>
       const giftId = payload.data.giftId
       const totalCoin = payload.data.total_coin
       const uname = payload.data.uname
-      dispatch.emit('gift', { roomid, mid, giftId, totalCoin, coinType, uname })
+      const giftName = payload.data.gift_name
+      const price = payload.data.price
+      const face = payload.data.face
+      dispatch.emit('gift', {
+        roomid,
+        mid,
+        giftId,
+        totalCoin,
+        coinType,
+        uname,
+        price,
+        giftName,
+        face
+      })
     })
     live.on('GUARD_BUY', (payload) => {
       const mid = payload.data.uid
@@ -69,8 +82,18 @@ const openRoom = ({ roomid }) =>
       const num = payload.data.num
       const price = payload.data.price
       const giftId = payload.data.gift_id
+      const giftName = payload.data.gift_name
       const level = payload.data.guard_level
-      dispatch.emit('guard', { roomid, mid, uname, num, price, giftId, level })
+      dispatch.emit('guard', {
+        roomid,
+        mid,
+        uname,
+        num,
+        price,
+        giftId,
+        level,
+        giftName
+      })
     })
 
     live.on('heartbeat', () => {
