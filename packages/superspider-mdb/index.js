@@ -57,7 +57,9 @@ process.on('uncaughtException', (err) => {
       ? 'mongodb://localhost:27017/amdb'
       : 'mongodb://admin:' +
         process.env.MONGODB_PASS +
-        '@' + process.env.MONGODB_IP + ':27017/admin?authMechanism=DEFAULT',
+        '@' +
+        process.env.MONGODB_IP +
+        ':27017/admin?authMechanism=DEFAULT',
     { useNewUrlParser: true }
   )
 
