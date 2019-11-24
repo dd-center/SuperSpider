@@ -10,7 +10,7 @@
 
 基本格式：
 
-`http://bilisc.com/?roomid=<你的房间号>&lang=<ja|zh>&showTime=<false|true>&showKana=<true|false>`
+`https://bilisc.com/?roomid=<你的房间号>&lang=<ja|zh>&showTime=<false|true>&showKana=<true|false>`
 
 参数解释：
 
@@ -24,4 +24,4 @@
 
 示例：
 
-`http://bilisc.com/?roomid=14917277&lang=ja&showTime=false&showKana=true`
+`https://bilisc.com/?roomid=14917277&lang=ja&showTime=false&showKana=true`

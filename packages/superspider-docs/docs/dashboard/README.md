@@ -1,6 +1,6 @@
 # 快速上手
 
-`http://bilisc.com/sc/dashboard?roomid=<你的房间号>`
+`https://bilisc.com/sc/dashboard?roomid=<你的房间号>`
 
 在浏览器中打开这个网址。应用将即刻开始监控。建议您预先在“用户名”和“密码”栏中填写好自己的信息以便下一步操作。
 

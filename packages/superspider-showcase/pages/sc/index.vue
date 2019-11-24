@@ -38,7 +38,7 @@
           </el-form-item>
           <el-form-item>
             <el-link
-              href="http://chat.bilisc.com"
+              href="https://chat.bilisc.com"
               target="_blank"
               type="primary"
               >{{ $t('common.chat') }}</el-link
@@ -105,7 +105,7 @@
         <a href="https://github.com/dd-center/SuperSpider"
           ><img
             alt="Star BiliSC! "
-            src="http://githubbadges.com/star.svg?user=dd-center&amp;repo=SuperSpider&amp;style=flat"
+            src="//githubbadges.com/star.svg?user=dd-center&amp;repo=SuperSpider&amp;style=flat"
         /></a>
       </el-row>
     </el-aside>

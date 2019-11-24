@@ -1,6 +1,6 @@
 # 快速上手
 
-`http://bilisc.com/?roomid=<你的房间号>`
+`https://bilisc.com/?roomid=<你的房间号>`
 
 将这个网址放入 OBS 的浏览器源中。
 

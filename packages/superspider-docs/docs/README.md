@@ -17,6 +17,6 @@ footer: 招募翻译，详情加群462879053。 MIT Licensed | Copyright © bili
 
 ## 一步上手
 
-`http://bilisc.com/?roomid=<你的房间号>`
+`https://bilisc.com/?roomid=<你的房间号>`
 
 将这个网址放入 OBS 的浏览器源中。

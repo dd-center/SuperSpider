@@ -109,7 +109,7 @@
         <a href="https://github.com/dd-center/SuperSpider"
           ><img
             alt="Star BiliSC! "
-            src="http://githubbadges.com/star.svg?user=dd-center&amp;repo=SuperSpider&amp;style=flat"
+            src="//githubbadges.com/star.svg?user=dd-center&amp;repo=SuperSpider&amp;style=flat"
         /></a>
       </el-row>
     </el-aside>
