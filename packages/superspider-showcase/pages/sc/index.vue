@@ -13,7 +13,7 @@
             style="text-align: center; margin: 0 auto; "
           />
           <p style="color: #606266; font-size: 14px;">
-            v1.0.2
+            v1.0.3
           </p>
         </div>
         <!-- <h2 align="center">BiliSC (δ)</h2> -->
@@ -70,7 +70,6 @@
           <el-form-item :label="$t('common.channelid')">
             <el-input
               v-model="room"
-              autofocus
               @keyup.enter.native="startFetchData"
             ></el-input>
           </el-form-item>
