@@ -73,7 +73,7 @@ const rdbCore = async (rid) => {
         }
       }
       const hasTr =
-        item.message_jpn.replace(/\s*/g, '').replace(/[\r\n]/g, '') !== ''
+        item.message_trans.replace(/\s*/g, '').replace(/[\r\n]/g, '') !== ''
       log(`LOG start write id ${item.id} with hastr: ${hasTr}`)
       try {
         if (hasTr) {
@@ -93,7 +93,7 @@ const rdbCore = async (rid) => {
               {
                 $set: {
                   status: 3,
-                  msgjpn: item.message_jpn
+                  msgjpn: item.message_trans
                     .replace(/\s*/g, '')
                     .replace(/[\r\n]/g, '')
                 }
@@ -113,7 +113,7 @@ const rdbCore = async (rid) => {
               avatar: item.user_info.face,
               price: Number(item.price),
               msg: item.message.replace(/\s*/g, '').replace(/[\r\n]/g, ''),
-              msgjpn: item.message_jpn
+              msgjpn: item.message_trans
                 .replace(/\s*/g, '')
                 .replace(/[\r\n]/g, ''),
               msgtr: '',
@@ -147,7 +147,7 @@ const rdbCore = async (rid) => {
                   avatar: item.user_info.face,
                   price: Number(item.price),
                   msg: item.message.replace(/\s*/g, '').replace(/[\r\n]/g, ''),
-                  msgjpn: item.message_jpn
+                  msgjpn: item.message_trans
                     .replace(/\s*/g, '')
                     .replace(/[\r\n]/g, ''),
                   msgtr: '',
@@ -174,7 +174,7 @@ const rdbCore = async (rid) => {
               avatar: item.user_info.face,
               price: Number(item.price),
               msg: item.message.replace(/\s*/g, '').replace(/[\r\n]/g, ''),
-              msgjpn: item.message_jpn
+              msgjpn: item.message_trans
                 .replace(/\s*/g, '')
                 .replace(/[\r\n]/g, ''),
               msgtr: '',
