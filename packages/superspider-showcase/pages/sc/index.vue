@@ -13,7 +13,7 @@
             style="text-align: center; margin: 0 auto; "
           />
           <p style="color: #606266; font-size: 14px;">
-            v1.0.3
+            v1.0.4
           </p>
         </div>
         <!-- <h2 align="center">BiliSC (δ)</h2> -->
@@ -245,6 +245,12 @@ export default {
     }
   },
   async mounted() {
+    for (const lang of navigator.languages) {
+      if (lang.includes('zh')) {
+        this.$i18n.locale = 'zh'
+        break
+      }
+    }
     this.showTimeNative = this.showTime
     this.showKanaNative = this.showKana
     this.showGiftNative = this.showGift

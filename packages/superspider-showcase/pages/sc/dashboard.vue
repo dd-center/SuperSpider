@@ -42,7 +42,7 @@
             style="text-align: center; margin: 0 auto; "
           />
           <p style="color: #606266; font-size: 14px;">
-            v1.0.3
+            v1.0.4
           </p>
         </div>
         <!-- <h2 align="center">BiliSC/Dash (δ)</h2> -->
