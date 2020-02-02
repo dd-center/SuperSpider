@@ -246,6 +246,10 @@ export default {
   },
   async mounted() {
     for (const lang of navigator.languages) {
+      if (lang.includes('ja')) {
+        this.$i18n.locale = 'ja'
+        break
+      }
       if (lang.includes('zh')) {
         this.$i18n.locale = 'zh'
         break
