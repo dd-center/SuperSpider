@@ -1,29 +1,37 @@
-# SuperSpider
+<div align="center">
+  <h1><a href="https://docs.bilisc.com/" target="_blank">BiliSC</a></h1>
 
-[走召虫——BiliBili SuperChat 爬虫](https://docs.bilisc.com/)
+  <p style="font-size: 20px;">若要转到用户手册，请直接点击上面的链接。</p>
 
-![Annotation 2019-09-28 202251](https://user-images.githubusercontent.com/20179549/65817757-acb5f880-e23d-11e9-93c6-e5ff445b9880.png)
+![Stars](https://img.shields.io/github/stars/dd-center/superspider?color=brightgreen&style=flat-square)
+![Language](https://img.shields.io/badge/language-javascript-brightgreen?logo=javascript&style=flat-square)
+![I18N](https://img.shields.io/badge/i18n-zh%7Cjp-brightgreen?style=flat-square)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
+![License](https://img.shields.io/github/license/dd-center/superspider?style=flat-square)
 
-## 端口表
+</div>
 
-| APP     | PORT |
-| ------- | ---- |
-| DB      | 2161 |
-| Core    | 2162 |
-| ANA     | 2163 |
-| Website | 2164 |
-| AtHome  | 2165 |
-| MDB     | 2166 |
+## 👏 截图
 
-## 数据格式（SCDB/TXTDB）
+![Screenshot](https://user-images.githubusercontent.com/20179549/65817757-acb5f880-e23d-11e9-93c6-e5ff445b9880.png)
 
-除`ADB`中的数据为`ID:UID:TS（时间戳）:内容`之外，其他数据格式均为`ID:房间号:UID:TS（时间戳）:内容`。
+## 独立组件指南
 
-## 数据格式（ADB/MongoDB）
+| 组件    | 端口 | 功能                  | 状态   |
+| ------- | ---- | --------------------- | ------ |
+| DB      | 2161 | 基于 TxtDB 存储的爬虫 | 已弃用 |
+| Core    | 2162 | 基于 TxtDB 的后端     | 已弃用 |
+| MDB     | 2166 | 基于 MongoDB 的爬虫   | 使用中 |
+| MCore   | 2162 | 基于 MongoDB 的后端   | 使用中 |
+| ANA     | 2163 | 日常维护服务          | 已弃用 |
+| Website | 2164 | BiliSC 前端           | 使用中 |
+| AtHome  | 2165 | 分布式爬虫            | 未启用 |
+
+## SC 数据格式（MongoDB）
 
 `mongodb://172.18.0.1:27017/amdb/maindb`
 
-```json with comments
+```jsonc
 {
   "_id": 1,
   "status": 0,
@@ -56,7 +64,7 @@
 
 `mongodb://172.18.0.1:27017/amdb/predb`
 
-```json with comments
+```jsonc
 {
   "_id": "ObjectId()",
   "type": 0,
@@ -79,94 +87,14 @@
 }
 ```
 
-## Deploy
+## 自部署
 
-### ANA
-
-Run using:
-
-`docker run -d -p 2163:2163 -v /scdb:/scdb -e MONGODB_PASS=PASS -e MONGODB_IP=IP afanyiyu/superspider-ana`
-
-Internal build using:
-
-`docker build -t afanyiyu/superspider-ana github.com/dd-center/SuperSpider#master:packages/superspider-ana`
-
-### DB
-
-Run using:
-
-`docker run -d -p 2161:2161 -v /scdb:/scdb afanyiyu/superspider-db`
-
-Internal build using:
-
-`docker build -t afanyiyu/superspider-db github.com/dd-center/SuperSpider#master:packages/superspider-db`
-
-### MDB
-
-Run using:
-
-`docker run -d -p 2165:2165 -p 2166:2166 -v /scdb:/scdb -e MONGODB_PASS=PASS -e MONGODB_IP=IP afanyiyu/superspider-mdb`
-
-Internal build using:
-
-`docker build -t afanyiyu/superspider-mdb github.com/dd-center/SuperSpider#master:packages/superspider-mdb`
-
-### PreDB
-
-Run using:
-
-`docker run -d -p 2165:2165 -p 2166:2166 -e MONGODB_PASS=PASS -e MONGODB_IP=IP afanyiyu/superspider-predb`
-
-Internal build using:
-
-`docker build -t afanyiyu/superspider-predb github.com/dd-center/SuperSpider#master:packages/superspider-predb`
-
-### Core
-
-Run using:
-
-`docker run -d -p 2162:2162 -v /scdb:/scdb afanyiyu/superspider-core`
-
-Internal build using:
-
-`docker build -t afanyiyu/superspider-core github.com/dd-center/SuperSpider#master:packages/superspider-core`
-
-### MCore
-
-Run using:
-
-`docker run -d -p 2162:2162 -e MONGODB_PASS=PASS -e MONGODB_IP=IP afanyiyu/superspider-mcore`
-
-Internal build using:
-
-`docker build -t afanyiyu/superspider-mcore github.com/dd-center/SuperSpider#master:packages/superspider-mcore`
-
-### Website
-
-Run using:
-
-`docker run -d -p 2164:2164 afanyiyu/superspider-showcase`
-
-Internal build using:
-
-`docker build -t afanyiyu/superspider-showcase github.com/dd-center/SuperSpider#master:packages/superspider-showcase`
-
-### AtHome
-
-Run using:
-
-`docker run -d afanyiyu/superspider-athome`
-
-Internal build using:
-
-`docker build -t afanyiyu/superspider-athome github.com/dd-center/SuperSpider#master:packages/superspider-athome`
+`docker run -d -p <端口号>:<端口号> -v /scdb:/scdb -e MONGODB_PASS=PASS -e MONGODB_IP=IP afanyiyu/superspider-<独立组件名称>`
 
 ## 捐赠
 
 您的捐赠是对该项目及我本人的支持。本项目获得的所有捐赠将会全部用于服务器的维护。
 
 ![Alipay](https://raw.githubusercontent.com/dd-center/SuperSpider/master/docs/pay/Alipay.jpg)
-
 ![Wechat](https://raw.githubusercontent.com/dd-center/SuperSpider/master/docs/pay/Wechat.png)
-
 ![WechatReward](https://raw.githubusercontent.com/dd-center/SuperSpider/master/docs/pay/WechatReward.png)
