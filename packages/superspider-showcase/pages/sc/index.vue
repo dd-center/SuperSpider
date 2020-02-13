@@ -39,7 +39,7 @@
         <el-row class="sider-scrollbar-item">
           <el-form
             ref="form"
-            label-width="150px"
+            label-width="170px"
             size="mini"
             @submit.native.prevent
           >
