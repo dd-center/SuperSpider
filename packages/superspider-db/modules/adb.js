@@ -50,7 +50,7 @@ module.exports = async function() {
             data.data.message.replace(/\s*/g, '').replace(/[\r\n]/g, '') +
             '\n'
           // ':' +
-          // data.data.message_jpn
+          // data.data.message_trans
         )
       } catch (e) {
         console.log('ERR when adb append')

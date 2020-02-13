@@ -48,7 +48,7 @@ const rdbCore = async (rid) => {
           item.message.replace(/\s*/g, '').replace(/[\r\n]/g, '') +
           '\n'
         // ':' +
-        // data.data.message_jpn
+        // data.data.message_trans
       )
       await fs.promises.appendFile(
         '/scdb/tdb/tlist',
