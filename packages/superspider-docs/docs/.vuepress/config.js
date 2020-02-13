@@ -39,7 +39,13 @@ module.exports = {
         nav: [
           { text: '实时监控', link: '/monitor/' },
           { text: '后台管理', link: '/dashboard/' },
-          { text: '数据分析', link: '/analyze/' }
+          { text: '数据分析', link: '/analyze/' },
+          {
+            text: 'QQ 群',
+            link:
+              'https://shang.qq.com/wpa/qunwpa?idkey=23e2cbf177a84d3af69455ebb123c24997580ac7a62e7a61c3c55ed1211ef72b'
+          },
+          { text: 'BiliSC', link: 'https://bilisc.com' }
         ],
         sidebar: {
           '/monitor/': ['', 'config'],

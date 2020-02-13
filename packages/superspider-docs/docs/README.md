@@ -12,7 +12,7 @@ features:
     details: 一键翻译醒目留言并实时反馈给主播，同时屏蔽部分内容不合适的醒目留言。
   - title: SC数据统计与分析
     details: 使用BiliSC.com在线查看醒目留言的数据统计与分析。
-footer: 招募翻译，详情加群462879053。 MIT Licensed | Copyright © bilisc.com
+footer: 建议或疑问请加群1053354128。 MIT Licensed | Copyright © bilisc.com
 ---
 
 ## 一步上手
