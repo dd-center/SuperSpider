@@ -1,0 +1,18 @@
+h1,
+.margin,
+.form {
+  margin: 24px;
+}
+
+.left,
+.form {
+  float: left;
+}
+
+.form {
+  max-width: 500px;
+}
+
+.el-form-item {
+  margin-bottom: 10px;
+}

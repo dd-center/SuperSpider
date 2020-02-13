@@ -41,9 +41,6 @@
             width="150px"
             style="text-align: center; margin: 0 auto; "
           />
-          <p style="color: #606266; font-size: 14px;">
-            v1.0.4
-          </p>
         </div>
         <!-- <h2 align="center">BiliSC/Dash (δ)</h2> -->
       </el-row>
@@ -106,7 +103,7 @@
         <p>{{ status }}</p>
       </el-row>
       <el-row style="margin: 30px;">
-        <a href="https://github.com/dd-center/SuperSpider"
+        <a target="_blank" href="https://github.com/dd-center/SuperSpider"
           ><img
             alt="Star BiliSC! "
             src="http://githubbadges.com/star.svg?user=dd-center&amp;repo=SuperSpider&amp;style=flat"

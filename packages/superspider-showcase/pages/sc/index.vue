@@ -2,18 +2,15 @@
   <el-container>
     <el-aside width="300px">
       <el-row>
-        <div
-          align-center
-          style="text-align: center; margin: 0 auto; padding: 30px; "
-        >
+        <div align-center style="text-align: center; padding: 30px; ">
           <img
             src="~/assets/Logo.png"
             height="150px"
             width="150px"
-            style="text-align: center; margin: 0 auto; "
+            style="text-align: center;"
           />
           <p style="color: #606266; font-size: 14px;">
-            v1.0.4
+            v1.0.5
           </p>
         </div>
         <!-- <h2 align="center">BiliSC (δ)</h2> -->
@@ -101,7 +98,7 @@
         </p>
         <p>{{ $t('sc.t6') }}</p>
 
-        <a href="https://github.com/dd-center/SuperSpider"
+        <a target="_blank" href="https://github.com/dd-center/SuperSpider"
           ><img
             alt="Star BiliSC! "
             src="http://githubbadges.com/star.svg?user=dd-center&amp;repo=SuperSpider&amp;style=flat"
