@@ -20,11 +20,11 @@ module.exports = async function() {
       )
     ).data
     log('TR: ')
-    log(`id: ${item._id} / jpn: ${data.message_jpn}`)
+    log(`id: ${item._id} / jpn: ${data.message_trans}`)
     try {
       await amdb.updateOne(
         { _id: item._id },
-        { $set: { msgjpn: data.message_jpn, status: data !== '' ? 3 : 2 } }
+        { $set: { msgjpn: data.message_trans, status: data !== '' ? 3 : 2 } }
       )
     } catch (e) {
       log('ERR at id ' + item._id)
