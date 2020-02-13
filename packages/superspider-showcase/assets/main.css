@@ -13,6 +13,36 @@ h1,
   max-width: 500px;
 }
 
+/* 
 .el-form-item {
   margin-bottom: 10px;
+} */
+
+.el-menu-item, .el-submenu__title {
+  height: auto;
+}
+
+.sider-scrollbar-item {
+  margin: 10px;
+}
+
+.el-form-item__label,
+.el-switch__label,
+.el-link,
+.el-link--default,
+.el-link.el-link--default,
+.sider-label {
+  color: white;
+  font-size: 14px;
+}
+
+.el-button--primary.is-plain {
+  color: white;
+  background: none;
+  border-color: white;
+}
+
+.el-input__inner {
+  background: none;
+  color: white;
 }

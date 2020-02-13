@@ -24,6 +24,10 @@ export default {
     tag: {
       type: String,
       default: 'div'
+    },
+    blockStyle: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -66,11 +70,11 @@ export default {
 
     if (Array.isArray(this.viewStyle)) {
       viewStyle = toObject(this.viewStyle)
-      viewStyle.display = 'flex'
+      viewStyle.display = this.blockStyle ? 'block' : 'flex'
     } else if (typeof this.viewStyle === 'string') {
-      viewStyle += 'display: flex;'
+      viewStyle += `display: ${this.blockStyle ? 'block' : 'flex'};`
     } else {
-      viewStyle = 'display: flex;'
+      viewStyle = `display: ${this.blockStyle ? 'block' : 'flex'};`
     }
 
     const view = h(

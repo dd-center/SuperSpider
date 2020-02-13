@@ -1,114 +1,114 @@
 <template>
-  <el-container>
-    <el-aside width="300px">
-      <el-row>
-        <div align-center style="text-align: center; padding: 30px; ">
-          <img
-            src="~/assets/Logo.png"
-            height="150px"
-            width="150px"
-            style="text-align: center;"
-          />
-          <p style="color: #606266; font-size: 14px;">
-            v1.0.5
+  <el-container style="height: 100vh;">
+    <section
+      class="sider-label"
+      style="background-color: #304156; height: 100vh; width: 450px;"
+    >
+      <sider-scrollbar tag="div" style="height: 100vh;" :block-style="true">
+        <el-row class="sider-scrollbar-item">
+          <div align-center style="text-align: center;">
+            <img
+              src="~/assets/Logo_Trans.png"
+              height="150px"
+              width="150px"
+              style="text-align: center;"
+            />
+            <p style="margin: 0;">v1.0.5</p>
+          </div>
+          <!-- <h2 align="center">BiliSC (δ)</h2> -->
+        </el-row>
+        <el-button-group
+          class="sider-scrollbar-item"
+          style="align-self: center;"
+        >
+          <el-button
+            size="medium"
+            type="primary"
+            plain
+            @click="openLink('https://docs.bilisc.com')"
+            >{{ $t('common.tutorial') }}</el-button
+          >
+          <el-button
+            size="medium"
+            type="primary"
+            plain
+            @click="openLink('http://chat.bilisc.com')"
+            >{{ $t('common.chat') }}</el-button
+          >
+        </el-button-group>
+        <el-row class="sider-scrollbar-item">
+          <el-form
+            ref="form"
+            label-width="150px"
+            size="mini"
+            @submit.native.prevent
+          >
+            <el-form-item :label="$t('common.lang')">
+              <LocaleChanger></LocaleChanger>
+            </el-form-item>
+            <el-form-item :label="$t('common.showTime')">
+              <el-switch v-model="showTimeNative"></el-switch>
+            </el-form-item>
+            <el-form-item :label="$t('common.showGift')">
+              <el-switch v-model="showGiftNative"></el-switch>
+            </el-form-item>
+            <el-form-item :label="$t('common.giftFilter')">
+              <el-switch v-model="giftFilterNative"></el-switch>
+            </el-form-item>
+            <el-form-item :label="$t('common.showKana')">
+              <el-switch
+                v-if="$i18n.locale == 'ja'"
+                v-model="showKanaNative"
+              ></el-switch>
+              <el-switch
+                v-if="$i18n.locale !== 'ja'"
+                :value="false"
+                disabled
+              ></el-switch>
+            </el-form-item>
+            <el-form-item :label="$t('common.channelid')">
+              <el-input
+                v-model="room"
+                @keyup.enter.native="startFetchData"
+              ></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                type="primary"
+                plain
+                @click="startFetchData"
+                @keyup.enter.native="startFetchData"
+                >Go</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </el-row>
+        <el-row class="sider-scrollbar-item">
+          <el-button size="medium" type="primary" plain @click="copyText">{{
+            $t('common.copy')
+          }}</el-button>
+          <p>{{ $t('sc.t1') }}</p>
+          <p>{{ $t('sc.t2') }}</p>
+          <p>{{ $t('sc.t3') }}</p>
+          <p>
+            {{ $t('sc.t4')
+            }}<a href="https://faithtown.tech/" target="_blank">Il Harper</a
+            >{{ $t('sc.t5') }}
           </p>
-        </div>
-        <!-- <h2 align="center">BiliSC (δ)</h2> -->
-      </el-row>
-      <!-- <el-row>
-        <el-link
-          href="https://docs.bilisc.com"
-          target="_blank"
-          type="primary"
-          >{{ $t('common.tutorial') }}</el-link
-        >
-      </el-row> -->
-      <el-row>
-        <el-form ref="form" label-width="150px" @submit.native.prevent>
-          <el-form-item>
-            <el-link
-              href="https://docs.bilisc.com"
-              target="_blank"
-              type="primary"
-              >{{ $t('common.tutorial') }}</el-link
-            >
-          </el-form-item>
-          <el-form-item>
-            <el-link
-              href="http://chat.bilisc.com"
-              target="_blank"
-              type="primary"
-              >{{ $t('common.chat') }}</el-link
-            >
-          </el-form-item>
-          <el-form-item :label="$t('common.lang')">
-            <LocaleChanger></LocaleChanger>
-          </el-form-item>
-          <el-form-item :label="$t('common.showTime')">
-            <el-switch v-model="showTimeNative"></el-switch>
-          </el-form-item>
-          <el-form-item :label="$t('common.showGift')">
-            <el-switch v-model="showGiftNative"></el-switch>
-          </el-form-item>
-          <el-form-item :label="$t('common.giftFilter')">
-            <el-switch v-model="giftFilterNative"></el-switch>
-          </el-form-item>
-          <el-form-item :label="$t('common.showKana')">
-            <el-switch
-              v-if="$i18n.locale == 'ja'"
-              v-model="showKanaNative"
-            ></el-switch>
-            <el-switch
-              v-if="$i18n.locale !== 'ja'"
-              :value="false"
-              disabled
-            ></el-switch>
-          </el-form-item>
-          <el-form-item :label="$t('common.channelid')">
-            <el-input
-              v-model="room"
-              @keyup.enter.native="startFetchData"
-            ></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button
-              type="primary"
-              @click="startFetchData"
-              @keyup.enter.native="startFetchData"
-              >Go</el-button
-            >
-          </el-form-item>
-        </el-form>
-      </el-row>
-      <el-row style="margin: 30px;">
-        <el-link
-          style="word-wrap: break-word; word-break: break-all; white-space: pre-wrap; "
-          @click="copyText"
-        >
-          {{ addText }}
-        </el-link>
-        <el-link @click="copyText">{{ $t('common.copy') }}</el-link>
-        <p>{{ $t('sc.t1') }}</p>
-        <p>{{ $t('sc.t2') }}</p>
-        <p>{{ $t('sc.t3') }}</p>
-        <p>
-          {{ $t('sc.t4')
-          }}<a href="https://faithtown.tech/" target="_blank">Il Harper</a
-          >{{ $t('sc.t5') }}
-        </p>
-        <p>{{ $t('sc.t6') }}</p>
+          <p>{{ $t('sc.t6') }}</p>
 
-        <a target="_blank" href="https://github.com/dd-center/SuperSpider"
-          ><img
-            alt="Star BiliSC! "
-            src="http://githubbadges.com/star.svg?user=dd-center&amp;repo=SuperSpider&amp;style=flat"
-        /></a>
-      </el-row>
-    </el-aside>
-    <el-main>
-      <el-row>
-        <div align="center">
-          <div v-for="liveItem in scData" :key="liveItem.ts">
+          <a target="_blank" href="https://github.com/dd-center/SuperSpider"
+            ><img
+              alt="Star BiliSC! "
+              src="https://img.shields.io/github/stars/dd-center/superspider?color=brightgreen&label=github%20stars&style=flat-square"
+          /></a>
+        </el-row>
+      </sider-scrollbar>
+    </section>
+    <sider-scrollbar tag="section" style="width: 100%;">
+      <el-container align="center" style="width: 100%; overflow-y: overlay;">
+        <el-container align="center" style="display: block;">
+          <div v-for="liveItem in scData" :key="liveItem.ts" align="center">
             <h2 v-if="showTimeNative">
               {{ new Date(liveItem.ts).toLocaleString() + $t('sc.livets') }}
             </h2>
@@ -165,13 +165,14 @@
               ></Superchat>
             </div>
           </div>
-        </div>
-      </el-row>
-    </el-main>
+        </el-container>
+      </el-container>
+    </sider-scrollbar>
   </el-container>
 </template>
 
 <script>
+import SiderScrollbar from '~/components/scrollbar'
 import Superchat from '~/components/superchat.vue'
 import LocaleChanger from '~/components/localechanger.vue'
 export default {
@@ -181,7 +182,8 @@ export default {
   layout: 'empty',
   components: {
     Superchat,
-    LocaleChanger
+    LocaleChanger,
+    'sider-scrollbar': SiderScrollbar
   },
   data() {
     return {
@@ -336,6 +338,9 @@ export default {
         else this.scData.push(item)
       }
       this.$nuxt.$loading.finish()
+    },
+    openLink(link) {
+      window.open(link)
     }
   }
 }

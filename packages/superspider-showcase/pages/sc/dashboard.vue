@@ -106,7 +106,7 @@
         <a target="_blank" href="https://github.com/dd-center/SuperSpider"
           ><img
             alt="Star BiliSC! "
-            src="http://githubbadges.com/star.svg?user=dd-center&amp;repo=SuperSpider&amp;style=flat"
+            src="https://img.shields.io/github/stars/dd-center/superspider?color=brightgreen&label=github%20stars&style=flat-square"
         /></a>
       </el-row>
     </el-aside>
