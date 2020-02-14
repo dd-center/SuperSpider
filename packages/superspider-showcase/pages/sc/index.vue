@@ -291,7 +291,7 @@ export default {
   methods: {
     fetchAdd() {
       this.addText =
-        'http://127.0.0.1:2164/sc/obs?roomid=' +
+        'https://bilisc.com/sc/obs?roomid=' +
         (this.room || this.$t('common.channelid')) +
         '&showTime=' +
         this.showTimeNative +
