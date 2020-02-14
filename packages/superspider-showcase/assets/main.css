@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'BiliSC Gothic';
+  src: url('msgothic.woff2') format('woff2'),
+    url('msgothic.woff') format('woff'),
+    url('msgothic.ttf') format('truetype'),
+    url('msgothic.eot') format('embedded-opentype'),
+    url('msgothic.svg') format('svg'),
+    url('msgothic.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'BiliSC YaHei';
+  src: url('msyh.woff2') format('woff2'),
+    url('msyh.woff') format('woff'),
+    url('msyh.ttf') format('truetype'),
+    url('msyh.eot') format('embedded-opentype'),
+    url('msyh.svg') format('svg'),
+    url('msyh.otf') format('opentype');
+}
