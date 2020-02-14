@@ -304,8 +304,8 @@ export default {
         '&lang=' +
         this.$i18n.locale
       this.fontStyle = `font-family: ${
-        this.$i18n.locale === 'ja' ? "'MS UI Gothic'" : "'Microsoft YaHei UI'"
-      },'Segoe UI',Tahoma,Geneva,Verdana,sans-serif !important;`
+        this.$i18n.locale === 'ja' ? "'MS UI Gothic'," : ''
+      }'Microsoft YaHei UI','Segoe UI',Tahoma,Geneva,Verdana,sans-serif !important;`
     },
     copyText() {
       this.$copyText(this.addText).then(
