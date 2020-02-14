@@ -1,8 +1,8 @@
 <template>
-  <el-container style="height: 100vh;">
+  <el-container :style="`height: 100vh; ${fontStyle}`">
     <section
       class="sider-label"
-      style="background-color: #304156; height: 100vh; width: 450px;"
+      :style="`background-color: ${bgColor}; height: 100vh; width: 450px;`"
     >
       <sider-scrollbar tag="div" style="height: 100vh;" :block-style="true">
         <el-row class="sider-scrollbar-item">
@@ -13,38 +13,42 @@
               width="150px"
               style="text-align: center;"
             />
-            <p style="margin: 0;">v1.0.5</p>
+            <p style="margin: 0;">v1.0.6</p>
           </div>
-          <!-- <h2 align="center">BiliSC (δ)</h2> -->
         </el-row>
-        <el-button-group
-          class="sider-scrollbar-item"
-          style="align-self: center;"
-        >
-          <el-button
-            size="medium"
-            type="primary"
-            plain
-            @click="openLink('https://docs.bilisc.com')"
-            >{{ $t('common.tutorial') }}</el-button
-          >
-          <el-button
-            size="medium"
-            type="primary"
-            plain
-            @click="openLink('http://chat.bilisc.com')"
-            >{{ $t('common.chat') }}</el-button
-          >
-        </el-button-group>
+        <el-row class="sider-scrollbar-item">
+          <el-button-group class="sider-scrollbar-item">
+            <el-button
+              size="small"
+              type="primary"
+              plain
+              :style="fontStyle"
+              @click="openLink('https://docs.bilisc.com')"
+              >{{ $t('common.tutorial') }}</el-button
+            >
+            <el-button
+              size="small"
+              type="primary"
+              plain
+              :style="fontStyle"
+              @click="openLink('http://chat.bilisc.com')"
+              >{{ $t('common.chat') }}</el-button
+            >
+          </el-button-group>
+        </el-row>
         <el-row class="sider-scrollbar-item">
           <el-form
             ref="form"
             label-width="170px"
             size="mini"
+            label-position="left"
             @submit.native.prevent
           >
             <el-form-item :label="$t('common.lang')">
-              <LocaleChanger></LocaleChanger>
+              <el-select v-model="$i18n.locale">
+                <el-option label="日本語" value="ja"></el-option>
+                <el-option label="中文" value="zh"></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item :label="$t('common.showTime')">
               <el-switch v-model="showTimeNative"></el-switch>
@@ -76,6 +80,7 @@
               <el-button
                 type="primary"
                 plain
+                icon="el-icon-s-promotion"
                 @click="startFetchData"
                 @keyup.enter.native="startFetchData"
                 >Go</el-button
@@ -84,9 +89,26 @@
           </el-form>
         </el-row>
         <el-row class="sider-scrollbar-item">
-          <el-button size="medium" type="primary" plain @click="copyText">{{
-            $t('common.copy')
-          }}</el-button>
+          <el-button-group class="sider-scrollbar-item">
+            <el-button
+              size="small"
+              type="primary"
+              plain
+              :style="fontStyle"
+              @click="openLink(addText)"
+              >{{ $t('common.standalone') }}</el-button
+            >
+            <el-button
+              size="small"
+              type="primary"
+              plain
+              :style="fontStyle"
+              @click="copyText"
+              >{{ $t('common.copy') }}</el-button
+            >
+          </el-button-group>
+        </el-row>
+        <el-row class="sider-scrollbar-item">
           <p>{{ $t('sc.t1') }}</p>
           <p>{{ $t('sc.t2') }}</p>
           <p>{{ $t('sc.t3') }}</p>
@@ -174,7 +196,6 @@
 <script>
 import SiderScrollbar from '~/components/scrollbar'
 import Superchat from '~/components/superchat.vue'
-import LocaleChanger from '~/components/localechanger.vue'
 export default {
   head: {
     title: 'BiliSC'
@@ -182,7 +203,6 @@ export default {
   layout: 'empty',
   components: {
     Superchat,
-    LocaleChanger,
     'sider-scrollbar': SiderScrollbar
   },
   data() {
@@ -195,7 +215,10 @@ export default {
       showKanaNative: true,
       showGiftNative: true,
       giftFilterNative: true,
-      addText: ''
+      addText: '',
+      fontStyle: '',
+      bgColor: '',
+      bgColorList: ['#304156', '#473252', '#00463f']
     }
   },
   computed: {
@@ -239,11 +262,12 @@ export default {
     room() {
       this.fetchAdd()
     },
-    $i18n() {
+    '$i18n.locale'() {
       this.fetchAdd()
     }
   },
   async mounted() {
+    this.bgColor = this.bgColorList[Math.floor(Math.random() * 3)]
     for (const lang of navigator.languages) {
       if (lang.includes('ja')) {
         this.$i18n.locale = 'ja'
@@ -267,7 +291,7 @@ export default {
   methods: {
     fetchAdd() {
       this.addText =
-        'https://bilisc.com/?roomid=' +
+        'https://bilisc.com/sc/obs?roomid=' +
         (this.room || this.$t('common.channelid')) +
         '&showTime=' +
         this.showTimeNative +
@@ -279,6 +303,9 @@ export default {
         this.giftFilterNative +
         '&lang=' +
         this.$i18n.locale
+      this.fontStyle = `font-family: ${
+        this.$i18n.locale === 'ja' ? "'MS UI Gothic'" : "'Microsoft YaHei UI'"
+      },'Segoe UI',Tahoma,Geneva,Verdana,sans-serif !important;`
     },
     copyText() {
       this.$copyText(this.addText).then(
@@ -346,4 +373,42 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.el-menu-item,
+.el-submenu__title {
+  height: auto;
+}
+
+.sider-scrollbar-item {
+  margin: 10px 24px;
+}
+
+.el-form-item__label,
+.el-switch__label,
+.el-link,
+.el-link--default,
+.el-link.el-link--default,
+.sider-label {
+  color: white;
+  /* font-size: 14px; */
+}
+
+.el-button--primary.is-plain {
+  color: white;
+  background: none;
+  border-color: white;
+}
+
+.el-input__inner {
+  background: none;
+  color: white;
+}
+
+.el-form-item__content > .el-switch {
+  float: right;
+}
+
+.el-button-group {
+  float: initial;
+}
+</style>

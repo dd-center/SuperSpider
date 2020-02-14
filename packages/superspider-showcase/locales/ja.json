@@ -10,7 +10,7 @@
     "history": "以下は歴史です"
   },
   "common": {
-    "channelid": "チャンネルID",
+    "channelid": "チャンネル",
     "lang": "言語",
     "showTime": "時間表示",
     "showKana": "カタカナ表示",
@@ -20,6 +20,7 @@
     "chat": "OBS弾幕プラグイン",
     "copySucceed": "コピー成功",
     "copyFailed": "コピー失敗",
-    "copy": "OBSリンクをコピー"
+    "copy": "リンクをコピー",
+    "standalone": "スタンドアロンページ"
   }
 }

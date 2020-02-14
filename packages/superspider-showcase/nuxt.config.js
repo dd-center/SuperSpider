@@ -29,7 +29,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['element-ui/lib/theme-chalk/index.css', '~/assets/main.css'],
+  css: ['element-ui/lib/theme-chalk/index.css'],
   router: {
     middleware: 'i18n'
   },
