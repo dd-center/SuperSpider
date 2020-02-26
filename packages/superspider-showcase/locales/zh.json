@@ -21,6 +21,7 @@
     "copySucceed": "复制成功",
     "copyFailed": "复制失败",
     "copy": "复制OBS链接",
-    "standalone": "打开独立窗口"
+    "standalone": "打开独立窗口",
+    "error": "错误"
   }
 }

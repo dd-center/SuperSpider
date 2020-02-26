@@ -21,6 +21,7 @@
     "copySucceed": "コピーしました",
     "copyFailed": "コピーに失敗しました",
     "copy": "リンクをコピー",
-    "standalone": "ポップアウト"
+    "standalone": "ポップアウト",
+    "error": "エラー"
   }
 }
