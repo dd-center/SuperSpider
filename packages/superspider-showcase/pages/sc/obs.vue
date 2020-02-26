@@ -191,16 +191,14 @@ export default {
       await this.fetchData()
       if (this.started === this.room) return
       if (this.timer) clearTimeout(this.timer)
-      this.timer = this.setTimeoutLoop(async () => {
-        await this.fetchData()
-      }, 8000)
+      this.setTimeoutLoop()
       this.started = this.room
     },
-    setTimeoutLoop(call, time) {
+    setTimeoutLoop() {
       this.timer = setTimeout(async function fn() {
-        await call()
-        this.timer = setTimeout(fn, time)
-      }, time)
+        await this.fetchData().catch(() => {})
+        this.timer = setTimeout(fn, 8000)
+      }, 8000)
     },
     async fetchData() {
       if (!this.room || isNaN(Number(this.room)) || this.room === '') return
