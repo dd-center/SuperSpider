@@ -13,7 +13,7 @@
               width="150px"
               style="text-align: center;"
             />
-            <p style="margin: 0;">v1.0.6</p>
+            <p style="margin: 0;">v1.0.8</p>
           </div>
         </el-row>
         <el-row class="sider-scrollbar-item">
@@ -324,17 +324,18 @@ export default {
     },
     async startFetchData() {
       if (!this.room) return
-      await this.fetchData()
+      await this.fetchData().catch(() => {})
       if (this.started === this.room) return
       if (this.timer) clearTimeout(this.timer)
       this.setTimeoutLoop()
       this.started = this.room
     },
     setTimeoutLoop() {
-      this.timer = setTimeout(async function fn() {
+      const fn = async () => {
         await this.fetchData().catch(() => {})
         this.timer = setTimeout(fn, 8000)
-      }, 8000)
+      }
+      this.timer = setTimeout(fn, 8000)
     },
     async fetchData() {
       if (!this.room || isNaN(Number(this.room)) || this.room === '') return

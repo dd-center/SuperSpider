@@ -145,17 +145,18 @@ export default {
   },
   methods: {
     async startFetchData() {
-      await this.fetchData()
+      await this.fetchData().catch(() => {})
       if (this.started === this.form.room) return
       if (this.timer) clearTimeout(this.timer)
       this.setTimeoutLoop()
       this.started = this.form.room
     },
     setTimeoutLoop() {
-      this.timer = setTimeout(async function fn() {
+      const fn = async () => {
         await this.fetchData().catch(() => {})
         this.timer = setTimeout(fn, 8000)
-      }, 8000)
+      }
+      this.timer = setTimeout(fn, 8000)
     },
     async fetchData() {
       if (
