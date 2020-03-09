@@ -2,13 +2,13 @@ const rp = require('request-promise-native')
 
 const conv = require('../utils/nameConv')
 
+const { amdbP, utrdbP } = require('../utils/db')
+
 const log = process.env.NODE_ENV == 'development' ? console.log : () => {}
 
 module.exports = async function() {
-  if (!global.amdb) return
-  const amdb = global.amdb
-  if (!global.utrdb) return
-  const utrdb = global.utrdb
+  const amdb = await amdbP
+  const utrdb = await utrdbP
 
   const cursor = amdb.find({})
   while (await cursor.hasNext()) {
